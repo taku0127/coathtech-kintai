@@ -1,0 +1,53 @@
+@use "../abstracts/forward" as *;
+
+.c-authForm{
+    padding: 81px 0 60px;
+    width: 680px;
+    margin: auto;
+    &_title{
+        font-size: 36px;
+        font-weight: 700;
+        text-align: center;
+    }
+    &_inputGroup{
+        &s{
+            margin-top: 45px;
+        }
+        &:not(:first-child){
+            margin-top: 33px;
+        }
+    }
+    &_label{
+        font-size: 24px;
+        font-weight: bold;
+    }
+    &_input{
+        margin-top: 5px;
+        padding: 10px 15px;
+        border: 1px solid #000;
+        border-radius: 4px;
+        width: 100%;
+    }
+    &_btns{
+        margin-top: 93px;
+        text-align: center;
+    }
+    &_submitBtn{
+        background-color: #000;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        padding: 15px 0;
+        text-align: center;
+        cursor: pointer;
+        width: 100%;
+        font-size: 26px;
+        font-weight: bold;
+    }
+    &_link{
+        font-size: 20px;
+        color: #0073CC;
+        margin-top: 20px;
+        display: inline-block;
+    }
+}
