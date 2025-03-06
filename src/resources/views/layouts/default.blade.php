@@ -11,7 +11,7 @@
 </head>
 <body>
     @include('partials.header')
-    <main class="l-container">
+    <main>
         @yield('content')
     </main>
     @stack('javascript')
