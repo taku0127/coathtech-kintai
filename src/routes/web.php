@@ -19,3 +19,6 @@ Route::get('/', function () {
 Route::get('/admin/login', function () {
     return view('auth/admin_login');
 });
+Route::get('/auth/mail', function () {
+    return view('auth/mail');
+});

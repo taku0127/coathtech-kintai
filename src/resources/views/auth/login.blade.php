@@ -17,7 +17,7 @@
             </div>
             <div class="c-authForm_btns">
                 <button class="c-authForm_submitBtn" type="submit">ログインする</button>
-                <a href="/login" class="c-authForm_link">会員登録はこちら</a>
+                <a href="/register" class="c-authForm_link">会員登録はこちら</a>
             </div>
         </div>
     </form>

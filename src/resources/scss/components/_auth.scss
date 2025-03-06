@@ -51,3 +51,35 @@
         display: inline-block;
     }
 }
+
+.c-authMail{
+    padding: 237px 0;
+    width: 720px;
+    margin: auto;
+    text-align: center;
+    &_text{
+        font-size: 24px;
+        font-weight: bold;
+        line-height: 29px;
+    }
+    &_btns{
+        margin-top: 62px;
+        text-align: center;
+    }
+    &_button{
+        background-color: #D9D9D9;
+        border: 1px solid #000;
+        border-radius: 10px;
+        padding: 20px 33px;
+        text-align: center;
+        font-size: 24px;
+        font-weight: bold;
+        display: inline-block;
+    }
+    &_link{
+        font-size: 20px;
+        color: #0073CC;
+        margin-top: 52px;
+        display: inline-block;
+    }
+}
