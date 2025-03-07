@@ -2,5 +2,7 @@
     "/js/app.js": "/js/app.js",
     "/js/bootstrap.js": "/js/bootstrap.js",
     "/css/main.css": "/css/main.css",
-    "/css/reset.css": "/css/reset.css"
+    "/css/stamp_correction_request_list.css": "/css/stamp_correction_request_list.css",
+    "/css/reset.css": "/css/reset.css",
+    "/css/attendance.css": "/css/attendance.css"
 }

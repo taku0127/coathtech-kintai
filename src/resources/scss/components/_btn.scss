@@ -1,0 +1,17 @@
+.c-btn{
+    background-color: #000;
+    color: #fff;
+    border-radius: 20px;
+    padding: 19px 76px;
+    font-size: 32px;
+    font-weight: 700;
+    &.--reverse{
+        background-color: #fff;
+        color: #000;
+    }
+    &.--small{
+        font-size: 22px;
+        border-radius: 5px;
+        padding: 11px 41px;
+    }
+}

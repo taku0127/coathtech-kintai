@@ -1,0 +1,54 @@
+@extends('layouts.default')
+
+@section('title','勤怠登録')
+
+@push('css')
+    <link rel="stylesheet" href="{{ asset('css/stamp_correction_request_list.css')}}">
+@endpush
+@section('content')
+<div class="c-content p-stampCorrectionRequestList">
+    <div class="c-layout">
+        <h1 class="c-title">勤怠一覧</h1>
+        <div class="p-stampCorrectionRequestList_links">
+            <a href="" class="p-stampCorrectionRequestList_link --active">承認待ち</a>
+            <a href="" class="p-stampCorrectionRequestList_link">承認済み</a>
+        </div>
+        <div class="c-tableBox p-stampCorrectionRequestList_table">
+            <table class="c-table">
+                <tr class="c-table_tr">
+                    <th class="c-table_th">状態</th>
+                    <th class="c-table_th">名前</th>
+                    <th class="c-table_th">対象日時</th>
+                    <th class="c-table_th">申請理由</th>
+                    <th class="c-table_th">申請日時</th>
+                    <th class="c-table_th">詳細</th>
+                </tr>
+                <tr class="c-table_tr">
+                    <td class="c-table_td">承認待ち</td>
+                    <td class="c-table_td">西伶奈</td>
+                    <td class="c-table_td">2023/06/01</td>
+                    <td class="c-table_td">遅延のため</td>
+                    <td class="c-table_td">2023/06/02</td>
+                    <td class="c-table_td"><a href="" class="c-table_link">詳細</a></td>
+                </tr>
+                <tr class="c-table_tr">
+                    <td class="c-table_td">承認待ち</td>
+                    <td class="c-table_td">西伶奈</td>
+                    <td class="c-table_td">2023/06/01</td>
+                    <td class="c-table_td">遅延のため</td>
+                    <td class="c-table_td">2023/06/02</td>
+                    <td class="c-table_td"><a href="" class="c-table_link">詳細</a></td>
+                </tr>
+                <tr class="c-table_tr">
+                    <td class="c-table_td">承認待ち</td>
+                    <td class="c-table_td">西伶奈</td>
+                    <td class="c-table_td">2023/06/01</td>
+                    <td class="c-table_td">遅延のため</td>
+                    <td class="c-table_td">2023/06/02</td>
+                    <td class="c-table_td"><a href="" class="c-table_link">詳細</a></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+@endsection
