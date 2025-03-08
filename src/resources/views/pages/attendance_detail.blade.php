@@ -1,6 +1,6 @@
 @extends('layouts.default')
 
-@section('title','勤怠登録')
+@section('title','勤怠詳細')
 
 @push('css')
     <link rel="stylesheet" href="{{ asset('css/attendance.css')}}">

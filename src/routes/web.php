@@ -26,11 +26,20 @@ Route::get('/attendance', function () {
     return view('pages/staff/attendance');
 });
 Route::get('/attendance/list', function () {
-    return view('pages/staff/attendance_list');
+    return view('pages/attendance_list');
 });
 Route::get('/stamp_correction_request/list', function () {
     return view('pages/stamp_correction_request_list');
 });
 Route::get('/attendance/{id}', function () {
-    return view('pages/staff/attendance_detail');
+    return view('pages/attendance_detail');
+});
+Route::get('/admin/attendance/list', function () {
+    return view('pages/admin/attendance_list');
+});
+Route::get('/admin/staff/list', function () {
+    return view('pages/admin/staff_list');
+});
+Route::get('/admin/attendance/staff/{id}', function () {
+    return view('pages/attendance_detail');
 });
