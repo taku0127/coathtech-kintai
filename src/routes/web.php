@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,12 +15,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-Route::get('/admin/login', function () {
-    return view('auth/admin_login');
-});
 Route::get('/auth/mail', function () {
     return view('auth/mail');
 });
@@ -42,4 +38,19 @@ Route::get('/admin/staff/list', function () {
 });
 Route::get('/admin/attendance/staff/{id}', function () {
     return view('pages/attendance_detail');
+});
+
+Route::post('/logout', function () {
+    if (Auth::guard('admin')->check()) {
+        Auth::guard('admin')->logout();
+        return redirect('/admin/login');
+    } elseif (Auth::guard('web')->check()) {
+        Auth::guard('web')->logout();
+        return redirect('/login');
+    }
+    return redirect('/login');
+})->name('logout');
+Route::prefix('admin')->group(function () {
+    Route::get('login', [LoginController::class, 'create'])->name('admin.login');
+    Route::post('login', [LoginController::class, 'store']);
 });

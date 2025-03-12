@@ -6,6 +6,19 @@
         <li class="c-header_menuList"><a href="">勤怠</a></li>
         <li class="c-header_menuList"><a href="">勤怠一覧</a></li>
         <li class="c-header_menuList"><a href="">申請</a></li>
-        <li class="c-header_menuList"><a href="">ログアウト</a></li>
+        <li class="c-header_menuList">
+            <form action="{{ route('logout') }}" method="POST">
+                @csrf
+                <button>ログアウト</button>
+            </form>
+        </li>
     </ul>
 </header>
+@php
+    if (Auth::guard('admin')->check()) {
+    echo "管理者としてログインしています";
+}
+if (Auth::guard('web')->check()) {
+    echo "一般ユーザーとしてログインしています";
+}
+@endphp

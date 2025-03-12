@@ -5,7 +5,8 @@
 @section('content')
 <div class="c-authForm">
     <h1 class="c-authForm_title">会員登録</h1>
-    <form action="/register">
+    <form action="/register" method="POST">
+        @csrf
         <div class="c-authForm_inputGroups">
             <div class="c-authForm_inputGroup">
                 <label class="c-authForm_label" for="name">名前</label>

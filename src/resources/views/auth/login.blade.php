@@ -5,7 +5,8 @@
 @section('content')
 <div class="c-authForm">
     <h1 class="c-authForm_title">ログイン</h1>
-    <form action="/login">
+    <form action="/login" method="POST">
+        @csrf
         <div class="c-authForm_inputGroups">
             <div class="c-authForm_inputGroup">
                 <label class="c-authForm_label" for="email">メールアドレス</label>

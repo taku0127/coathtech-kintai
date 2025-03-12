@@ -6,6 +6,7 @@ use App\Actions\Fortify\CreateNewUser;
 use App\Actions\Fortify\ResetUserPassword;
 use App\Actions\Fortify\UpdateUserPassword;
 use App\Actions\Fortify\UpdateUserProfileInformation;
+use App\Http\Responses\LoginResponse;
 use App\Http\Responses\RegisterResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Cache\RateLimiting\Limit;
@@ -55,23 +56,9 @@ class FortifyServiceProvider extends ServiceProvider
             \Laravel\Fortify\Contracts\RegisterResponse::class,
             RegisterResponse::class
         );
-
-        Fortify::authenticateUsing(function (Request $request) {
-            // Admin ログイン
-            $admin = Admin::where('email', $request->email)->first();
-            if ($admin && Hash::check($request->password, $admin->password)) {
-                Auth::guard('admin')->login($admin);
-                return $admin;
-            }
-
-            // User ログイン
-            $user = User::where('email', $request->email)->first();
-            if ($user && Hash::check($request->password, $user->password)) {
-                Auth::guard('web')->login($user);
-                return $user;
-            }
-
-            return null;
-        });
+        $this->app->singleton(
+            \Laravel\Fortify\Contracts\LoginResponse::class,
+            LoginResponse::class
+        );
     }
 }

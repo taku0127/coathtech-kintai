@@ -5,7 +5,9 @@
 @section('content')
 <div class="c-authForm">
     <h1 class="c-authForm_title">管理者ログイン</h1>
-    <form action="/login">
+    <form action="{{ route('admin.login') }}" method="POST">
+        @csrf
+        <input type="hidden" name="role" value="admin">
         <div class="c-authForm_inputGroups">
             <div class="c-authForm_inputGroup">
                 <label class="c-authForm_label" for="email">メールアドレス</label>
