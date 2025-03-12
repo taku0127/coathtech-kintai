@@ -14,11 +14,3 @@
         </li>
     </ul>
 </header>
-@php
-    if (Auth::guard('admin')->check()) {
-    echo "管理者としてログインしています";
-}
-if (Auth::guard('web')->check()) {
-    echo "一般ユーザーとしてログインしています";
-}
-@endphp
