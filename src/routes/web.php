@@ -20,7 +20,7 @@ Route::get('/auth/mail', function () {
 });
 Route::get('/attendance', function () {
     return view('pages/staff/attendance');
-});
+})->middleware(['auth','verified']);
 Route::get('/attendance/list', function () {
     return view('pages/attendance_list');
 });

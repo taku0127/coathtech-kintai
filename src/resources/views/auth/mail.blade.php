@@ -8,9 +8,12 @@
         メール認証を完了してください。</p>
     <div class="c-authMail_btns">
         <div class="c-authMail_btn">
-            <a href="" class="c-authMail_button">認証はこちらから</a>
+            <a href="/email/verify" class="c-authMail_button">認証はこちらから</a>
         </div>
-        <div class="c-authMail_btn"><a href="" class="c-authMail_link">認証メールを再送する</a></div>
+        <form action="/email/verification-notification" method="POST">
+            @csrf
+            <div class="c-authMail_btn"><button class="c-authMail_link">認証メールを再送する</button></div>
+        </form>
     </div>
 </div>
 @endsection
