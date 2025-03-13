@@ -48,6 +48,11 @@
   margin-top: 20px;
   display: inline-block;
 }
+.c-authForm_error {
+  color: red;
+  margin-top: 10px;
+  font-size: 16px;
+}
 
 .c-authMail {
   padding: 237px 0;

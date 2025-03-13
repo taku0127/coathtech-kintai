@@ -6,6 +6,7 @@ use App\Actions\Fortify\CreateNewUser;
 use App\Actions\Fortify\ResetUserPassword;
 use App\Actions\Fortify\UpdateUserPassword;
 use App\Actions\Fortify\UpdateUserProfileInformation;
+use App\Http\Requests\CustomLoginRequest;
 use App\Http\Responses\LoginResponse;
 use App\Http\Responses\RegisterResponse;
 use Illuminate\Support\Facades\Auth;
@@ -18,6 +19,7 @@ use Laravel\Fortify\Fortify;
 use App\Models\Admin;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Laravel\Fortify\Http\Requests\LoginRequest;
 
 class FortifyServiceProvider extends ServiceProvider
 {
@@ -46,6 +48,8 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::loginView(function () {
             return view('auth.login');
         });
+
+        $this->app->bind(LoginRequest::class, function ($app) { return $app->make(CustomLoginRequest::class); });
 
         RateLimiter::for('login', function (Request $request) {
             $email = (string) $request->email;
