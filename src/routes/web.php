@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Models\Attendance;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,8 +20,10 @@ use Illuminate\Support\Facades\Auth;
 Route::middleware(['auth:web','verified'])->group(function () {
     Route::get('/attendance', [AttendanceController::class , 'index'])
     ->name('user.attendance');
+    Route::post('/attendance',[AttendanceController::class, 'storeClockIn']);
+    Route::post('/attendance/break_start',[AttendanceController::class, 'storeBreakStart'])->name('user.break_start');
+    Route::patch('/attendance/break_end',[AttendanceController::class, 'storeBreakEnd'])->name('user.break_end');
 });
-Route::post('/attendance',[AttendanceController::class, 'storeClockIn']);
 Route::get('/attendance/list', function () {
     return view('pages/attendance_list');
 });
