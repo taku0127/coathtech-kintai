@@ -18,7 +18,7 @@ class AttendanceController extends Controller
         $attendance = Attendance::where('user_id', 1)
         ->where('date', now()->format('Y-m-d'))
         ->first();
-        $isBreak = $attendance ? $this->isBreakStart($attendance->id) : false;;
+        $isBreak = $attendance ? $this->isBreakStart($attendance->id) : false;
         return view('pages.staff.attendance',compact('attendance','isBreak'));
     }
 
@@ -28,6 +28,12 @@ class AttendanceController extends Controller
             'date' => now(),
             'clock_in' => $request->clock_in,
         ]);
+        return redirect(route('user.attendance'));
+    }
+
+    public function storeClockOut(Request $request){
+        $attendance = Attendance::find($request->attendance_id);
+        $attendance->update(['clock_out' => $request->clock_out]);
         return redirect(route('user.attendance'));
     }
 

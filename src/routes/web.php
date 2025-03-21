@@ -23,6 +23,7 @@ Route::middleware(['auth:web','verified'])->group(function () {
     Route::post('/attendance',[AttendanceController::class, 'storeClockIn']);
     Route::post('/attendance/break_start',[AttendanceController::class, 'storeBreakStart'])->name('user.break_start');
     Route::patch('/attendance/break_end',[AttendanceController::class, 'storeBreakEnd'])->name('user.break_end');
+    Route::patch('/attendance/clock_out',[AttendanceController::class, 'storeClockOut'])->name('user.clock_out');
 });
 Route::get('/attendance/list', function () {
     return view('pages/attendance_list');
