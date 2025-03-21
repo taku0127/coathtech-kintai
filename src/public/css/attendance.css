@@ -43,7 +43,7 @@
   font-size: 80px;
   margin-top: 32px;
 }
-.p-attendance_btn:not(:first-child) {
+.p-attendance_btn:not(:first-of-type) {
   margin-left: 82px;
 }
 .p-attendance_btns {

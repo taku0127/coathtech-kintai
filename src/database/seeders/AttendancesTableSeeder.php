@@ -18,7 +18,7 @@ class AttendancesTableSeeder extends Seeder
     {
         //
         User::all()->each(function ($User,$index){
-            foreach(range(0,30) as $i){
+            foreach(range(1,30) as $i){
                 Attendance::factory()->count(1)->create(['user_id' => $User->id,'date' => Carbon::today()->subDays($i)]);
             }
         });

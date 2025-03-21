@@ -1,6 +1,7 @@
 {
     "/js/app.js": "/js/app.js",
     "/js/bootstrap.js": "/js/bootstrap.js",
+    "/js/script.js": "/js/script.js",
     "/css/main.css": "/css/main.css",
     "/css/stamp_correction_request_list.css": "/css/stamp_correction_request_list.css",
     "/css/reset.css": "/css/reset.css",

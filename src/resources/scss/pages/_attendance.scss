@@ -20,7 +20,7 @@
         margin-top: 32px;
     }
     &_btn{
-        &:not(:first-child){
+        &:not(:first-of-type){
             margin-left: 82px;
         }
         &s{

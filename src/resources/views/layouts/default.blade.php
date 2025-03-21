@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="{{ asset('css/reset.css') }}">
     <link rel="stylesheet" href="{{ asset('css/main.css') }}">
     @stack('css')
+    @stack('js')
 </head>
 <body>
     @include('partials.header')

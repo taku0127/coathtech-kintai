@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -15,12 +16,11 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::get('/auth/mail', function () {
-    return view('auth/mail');
+Route::middleware(['auth:web','verified'])->group(function () {
+    Route::get('/attendance', [AttendanceController::class , 'index'])
+    ->name('user.attendance');
 });
-Route::get('/attendance', function () {
-    return view('pages/staff/attendance');
-})->middleware(['auth','verified']);
+Route::post('/attendance',[AttendanceController::class, 'storeClockIn']);
 Route::get('/attendance/list', function () {
     return view('pages/attendance_list');
 });
