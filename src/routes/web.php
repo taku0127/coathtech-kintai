@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\AttendanceListController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Models\Attendance;
 use Illuminate\Support\Facades\Route;
@@ -24,15 +25,13 @@ Route::middleware(['auth:web','verified'])->group(function () {
     Route::post('/attendance/break_start',[AttendanceController::class, 'storeBreakStart'])->name('user.break_start');
     Route::patch('/attendance/break_end',[AttendanceController::class, 'storeBreakEnd'])->name('user.break_end');
     Route::patch('/attendance/clock_out',[AttendanceController::class, 'storeClockOut'])->name('user.clock_out');
-});
-Route::get('/attendance/list', function () {
-    return view('pages/attendance_list');
+    Route::get('/attendance/list',[AttendanceListController::class, 'userIndex'])->name('user.attendance_list');
+    Route::get('/attendance/{id}', function () {
+        return view('pages/attendance_detail');
+    })->name('user.attendance_detail');
 });
 Route::get('/stamp_correction_request/list', function () {
     return view('pages/stamp_correction_request_list');
-});
-Route::get('/attendance/{id}', function () {
-    return view('pages/attendance_detail');
 });
 Route::get('/admin/attendance/list', function () {
     return view('pages/admin/attendance_list');
