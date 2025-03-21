@@ -20,12 +20,14 @@
         margin-top: 32px;
     }
     &_btn{
-        &:not(:first-of-type){
-            margin-left: 82px;
-        }
         &s{
             margin-top: 87px;
             text-align: center;
+            display: flex;
+            justify-content: center;
+            & > :nth-child(n+2){
+                margin-left: 82px;
+            }
         }
     }
     &_note{

@@ -10,7 +10,7 @@
 
 @section('content')
 <div class="c-content p-attendance">
-    <span class="p-attendance_label">{{ $attendance ? '出勤中' : '出勤外'  }}</span>
+    <span class="p-attendance_label">{{ $attendance ? ($isBreak ? '休憩中' : '出勤中') : '出勤外'  }}</span>
     <div class="p-attendance_date js-currentDay"></div>
     <div class="p-attendance_time js-currentTime"></div>
     <div class="p-attendance_btns">
@@ -27,7 +27,7 @@
             @method('PATCH')
             <input type="hidden" name="end" class="js-currentTime" value="">
             <input type="hidden" name="attendance_id" value="{{ $attendance->id }}">
-            <button class="p-attendance_btn c-btn --reverse">休憩戻り</button>
+            <button class="p-attendance_btn c-btn --reverse">休憩戻</button>
         </form>
         @else
             <button class="p-attendance_btn c-btn">退勤</button>
