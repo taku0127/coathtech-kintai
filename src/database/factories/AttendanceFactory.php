@@ -26,7 +26,7 @@ class AttendanceFactory extends Factory
             'clock_in' => $clockIn,
             'clock_out' => $clockOut,
             'note' => $this->faker->sentence(),
-            'approval' => $this->faker->boolean(),
+            'approval' => true,
         ];
     }
 }

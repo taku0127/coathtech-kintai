@@ -19,6 +19,10 @@ class Attendance extends Model
         return $this->hasMany(BreakTime::class);
     }
 
+    public function attendanceFix(){
+        return $this->hasOne(AttendanceFixes::class);
+    }
+
     public function getTimeFormatted($time){
         return $this->$time ? Carbon::parse($this->$time)->format('H:i') : null;
     }

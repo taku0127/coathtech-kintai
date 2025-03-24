@@ -10,18 +10,19 @@
     <div class="c-layout">
         <h1 class="c-title">勤怠詳細</h1>
         <div class="p-attendanceDetail_content">
-            <form action="" method="">
+            <form action="{{ route('user.attendance_detail',['id' => $attendance->id]) }}" method="POST">
+                @csrf
                 <table class="c-formTable">
                     <tr class="c-formTable_tr">
                         <th class="c-formTable_th">名前</th>
                         <td class="c-formTable_td">
-                            <p class="c-formTable_td_content"><span class="c-formTable_td_item">西　伶奈</span></p>
+                            <p class="c-formTable_td_content"><span class="c-formTable_td_item">{{ $attendance->user->name }}</span></p>
                         </td>
                     </tr>
                     <tr class="c-formTable_tr">
                         <th class="c-formTable_th">日付</th>
                         <td class="c-formTable_td">
-                            <p class="c-formTable_td_content"><span class="c-formTable_td_item">2023年</span><span class="c-formTable_td_item">6月1日</span></p>
+                            <p class="c-formTable_td_content"><span class="c-formTable_td_item">{{ \Carbon\Carbon::parse($attendance->date)->format('Y年') }}</span><span class="c-formTable_td_item">{{ \Carbon\Carbon::parse($attendance->date)->format('n月j日') }}</span></p>
                             <p class="c-formTable_td_content"></p>
                         </td>
                     </tr>
@@ -29,27 +30,57 @@
                         <th class="c-formTable_th">出勤・退勤</th>
                         <td class="c-formTable_td">
                             <p class="c-formTable_td_content">
-                                <span class="c-formTable_td_item"><input type="text" value="09:00"></span>
+                                <span class="c-formTable_td_item">
+                                    @if ($attendance->approval)
+                                    <input name="clock_in" type="text" value="{{ $attendance->getTimeFormatted('clock_in') }}">
+                                    @else
+                                    {{ $attendance->attendanceFix->getTimeFormatted('clock_in') }}
+                                    @endif
+                                </span>
                                 <span class="c-formTable_td_item">～</span>
-                                <span class="c-formTable_td_item"><input type="text" value="18:00"></span>
+                                <span class="c-formTable_td_item">
+                                    @if ($attendance->approval)
+                                    <input name="clock_out" type="text" value="{{ $attendance->getTimeFormatted('clock_out') }}">
+                                    @else
+                                    {{ $attendance->attendanceFix->getTimeFormatted('clock_out') }}
+                                    @endif
+                                </span>
                             </p>
                         </td>
                     </tr>
                     <tr class="c-formTable_tr">
                         <th class="c-formTable_th">休憩</th>
                         <td class="c-formTable_td">
+                            @foreach ($attendance->breakTimes as $breakTime)
                             <p class="c-formTable_td_content">
-                                <span class="c-formTable_td_item"><input type="text" value="12:00"></span>
+                                <span class="c-formTable_td_item">
+                                    @if ($attendance->approval)
+                                    <input name="break_time[start][{{ $breakTime->id }}]" type="text" value="{{ $breakTime->getTimeFormatted('start')}}">
+                                    @else
+                                    {{ $breakTime->breakTimeFix->getTimeFormatted('start')}}
+                                    @endif
+                                </span>
                                 <span class="c-formTable_td_item">～</span>
-                                <span class="c-formTable_td_item"><input type="text" value="13:00"></span>
+                                <span class="c-formTable_td_item">
+                                    @if ( $attendance->approval )
+                                    <input name="break_time[end][{{ $breakTime->id }}]" type="text" value="{{ $breakTime->getTimeFormatted('end') }}">
+                                    @else
+                                    {{ $breakTime->breakTimeFix->getTimeFormatted('end')}}
+                                    @endif
+                                </span>
                             </p>
+                            @endforeach
                         </td>
                     </tr>
                     <tr class="c-formTable_tr">
                         <th class="c-formTable_th">備考</th>
                         <td class="c-formTable_td">
                             <p class="c-formTable_td_content">
-                                <textarea name="" id="" cols="30" rows="5">電車遅延のため</textarea>
+                                @if ( $attendance->approval)
+                                <textarea name="note" id="" cols="30" rows="5"></textarea>
+                                @else
+                                {{ $attendance->attendanceFix->note }}
+                                @endif
                             </p>
                         </td>
                     </tr>

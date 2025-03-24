@@ -16,6 +16,10 @@ class BreakTime extends Model
         return $this->belongsTo(Attendance::class);
     }
 
+    public function breakTimeFix(){
+        return $this->hasOne(BreakTimeFixes::class);
+    }
+
     public function getTimeFormatted($time){
         return $this->$time ? Carbon::parse($this->$time)->format('H:i') : null;
     }
