@@ -27,34 +27,19 @@
                 @foreach ($attendances as $attendance)
                 <tr class="c-table_tr">
                     <td class="c-table_td">{{ \Carbon\Carbon::parse($attendance->date)->format('m/d') }}({{ ['日', '月', '火', '水', '木', '金', '土'][\Carbon\Carbon::parse($attendance->date)->dayOfWeek] }})</td>
-                    <td class="c-table_td">{{ $attendance->clock_in }}</td>
-                    <td class="c-table_td">{{ $attendance->clock_out }}</td>
+                    <td class="c-table_td">{{ $attendance->getTimeFormatted('clock_in') }}</td>
+                    <td class="c-table_td">{{ $attendance->getTimeFormatted('clock_out') }}</td>
                     <td class="c-table_td">
                         @foreach ($attendance->breakTimes as $breakTime)
                             @if ($loop->index > 0)
                                 <br>
                             @endif
-                            {{ $breakTime->start}}~{{ $breakTime->end }}
+                            {{ $breakTime->getTimeFormatted('start')}}~{{ $breakTime->getTimeFormatted('end') }}
                         @endforeach
                     </td>
                     <td class="c-table_td">
                         @if ($attendance->clock_out)
-                        @php
-                             // 出勤・退勤時間を Carbon インスタンス化
-                            $clockIn = \Carbon\Carbon::parse($attendance->clock_in);
-                            $clockOut = \Carbon\Carbon::parse($attendance->clock_out);
-                            // 休憩時間の合計（分単位）
-                            $breakMinutes = $attendance->breakTimes->filter(function($break){
-                                return !is_null($break->end);
-                            })->sum(function($break) {
-                                $breakStart = \Carbon\Carbon::parse($break->start);
-                                $breakEnd = \Carbon\Carbon::parse($break->end); return $breakEnd->diffInMinutes($breakStart);
-                            });
-                            $actualWorkMinutes = ($clockIn && $clockOut) ? $clockIn->diffInMinutes($clockOut) - $breakMinutes : 0;
-                            $hours = floor($actualWorkMinutes / 60);
-                            $minutes = $actualWorkMinutes % 60;
-                        @endphp
-                        {{ sprintf('%d:%02d', $hours, $minutes) }}
+                        {{ $attendance->getActualWorkTime() }}
                         @endif
                     </td>
                     <td class="c-table_td"><a href="{{ route('user.attendance_detail',['id' => $attendance->id]) }}" class="c-table_link">詳細</a></td>
