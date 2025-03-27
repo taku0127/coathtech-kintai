@@ -132,6 +132,9 @@
   align-items: center;
   font-weight: 700;
 }
+.c-formTable_td_content:not(:first-child) {
+  margin-top: 5px;
+}
 .c-formTable_td_item {
   width: 33%;
   text-align: center;
@@ -141,6 +144,11 @@
   border: 1px solid #E1E1E1;
   border-radius: 4px;
   padding: 5px 10px;
+}
+.c-formTable_error {
+  color: red;
+  margin-top: 10px;
+  font-size: 16px;
 }
 
 .c-header {

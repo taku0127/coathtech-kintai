@@ -22,6 +22,9 @@
             justify-content: space-between;
             align-items: center;
             font-weight: 700;
+            &:not(:first-child){
+                margin-top: 5px;
+            }
         }
         &_item{
             width: 33%;
@@ -33,5 +36,11 @@
             border-radius: 4px;
             padding: 5px 10px;
         }
+    }
+
+    &_error{
+        color: red;
+        margin-top: 10px;
+        font-size: 16px;
     }
 }
