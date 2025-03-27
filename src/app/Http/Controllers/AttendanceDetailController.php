@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AttendanceRequest;
 use App\Models\Attendance;
 use App\Models\AttendanceFixes;
 use App\Models\BreakTimeFixes;
@@ -14,7 +15,7 @@ class AttendanceDetailController extends Controller
         $attendance = Attendance::find($id);
         return view('pages.attendance_detail', compact('attendance'));
     }
-    public function userStore(Request $request,$id){
+    public function userStore(AttendanceRequest $request,$id){
         $attendance = Attendance::find($id);
         $attendance->update([
             'approval' => false,
