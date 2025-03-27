@@ -23,30 +23,16 @@
                     <th class="c-table_th">申請日時</th>
                     <th class="c-table_th">詳細</th>
                 </tr>
+                @foreach ($attendances as $attendance)
                 <tr class="c-table_tr">
                     <td class="c-table_td">承認待ち</td>
-                    <td class="c-table_td">西伶奈</td>
-                    <td class="c-table_td">2023/06/01</td>
-                    <td class="c-table_td">遅延のため</td>
-                    <td class="c-table_td">2023/06/02</td>
-                    <td class="c-table_td"><a href="" class="c-table_link">詳細</a></td>
+                    <td class="c-table_td">{{ $attendance->user->name}}</td>
+                    <td class="c-table_td">{{ $attendance->getDateFormatted('date') }}</td>
+                    <td class="c-table_td">{{ $attendance->attendanceFix[0]->note }}</td>
+                    <td class="c-table_td">{{ $attendance->attendanceFix[0]->getDateFormatted('created_at') }}</td>
+                    <td class="c-table_td"><a href="{{ route('user.attendance_detail',['id' => $attendance->id]) }}" class="c-table_link">詳細</a></td>
                 </tr>
-                <tr class="c-table_tr">
-                    <td class="c-table_td">承認待ち</td>
-                    <td class="c-table_td">西伶奈</td>
-                    <td class="c-table_td">2023/06/01</td>
-                    <td class="c-table_td">遅延のため</td>
-                    <td class="c-table_td">2023/06/02</td>
-                    <td class="c-table_td"><a href="" class="c-table_link">詳細</a></td>
-                </tr>
-                <tr class="c-table_tr">
-                    <td class="c-table_td">承認待ち</td>
-                    <td class="c-table_td">西伶奈</td>
-                    <td class="c-table_td">2023/06/01</td>
-                    <td class="c-table_td">遅延のため</td>
-                    <td class="c-table_td">2023/06/02</td>
-                    <td class="c-table_td"><a href="" class="c-table_link">詳細</a></td>
-                </tr>
+                @endforeach
             </table>
         </div>
     </div>

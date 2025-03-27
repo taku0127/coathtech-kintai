@@ -9,10 +9,15 @@ use Illuminate\Database\Eloquent\Model;
 class BreakTimeFixes extends Model
 {
     use HasFactory;
-    protected $fillable = ['break_time_id', 'start', 'end'];
+    protected $fillable = ['break_time_id', 'start', 'end','approval'];
 
     public function breakTime(){
         return $this->belongsTo(BreakTime::class);
+    }
+
+    public function scopeNotApproved($query)
+    {
+        return $query->where('approval', 'false');
     }
 
     public function getTimeFormatted($time){

@@ -34,7 +34,7 @@
                                     @if ($attendance->approval)
                                     <input name="clock_in" type="text" value="{{ old('clock_in') ??$attendance->getTimeFormatted('clock_in') }}">
                                     @else
-                                    {{ $attendance->attendanceFix->getTimeFormatted('clock_in') }}
+                                    {{ $attendance->attendanceFix[0]->getTimeFormatted('clock_in') }}
                                     @endif
                                 </span>
                                 <span class="c-formTable_td_item">～</span>
@@ -42,7 +42,7 @@
                                     @if ($attendance->approval)
                                     <input name="clock_out" type="text" value="{{ old('clock_out') ?? $attendance->getTimeFormatted('clock_out'); }}">
                                     @else
-                                    {{ $attendance->attendanceFix->getTimeFormatted('clock_out') }}
+                                    {{ $attendance->attendanceFix[0]->getTimeFormatted('clock_out') }}
                                     @endif
                                 </span>
                             </p>
@@ -68,7 +68,9 @@
                                     @if ($attendance->approval)
                                     <input name="break_time[start][{{ $breakTime->id }}]" type="text" value="{{ old("break_time.start.{$breakTime->id}") ?? $breakTime->getTimeFormatted('start')}}">
                                     @else
-                                    {{ $breakTime->breakTimeFix->getTimeFormatted('start')}}
+                                        @if ($breakTime->breakTimeFix->isNotEmpty())
+                                        {{ $breakTime->breakTimeFix[0]->getTimeFormatted('start') }}
+                                        @endif
                                     @endif
                                 </span>
                                 <span class="c-formTable_td_item">～</span>
@@ -76,7 +78,9 @@
                                     @if ( $attendance->approval )
                                     <input name="break_time[end][{{ $breakTime->id }}]" type="text" value="{{  old("break_time.end.{$breakTime->id}") ?? $breakTime->getTimeFormatted('end') }}">
                                     @else
-                                    {{ $breakTime->breakTimeFix->getTimeFormatted('end')}}
+                                        @if ($breakTime->breakTimeFix->isNotEmpty())
+                                        {{ $breakTime->breakTimeFix[0]->getTimeFormatted('end')}}
+                                        @endif
                                     @endif
                                 </span>
                             </p>
@@ -100,7 +104,7 @@
                                 @if ( $attendance->approval)
                                 <textarea name="note" id="" cols="30" rows="5">{{ old('note') }}</textarea>
                                 @else
-                                {{ $attendance->attendanceFix->note }}
+                                {{ $attendance->attendanceFix[0]->note }}
                                 @endif
                             </p>
                             @error("note")

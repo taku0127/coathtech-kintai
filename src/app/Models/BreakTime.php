@@ -17,7 +17,7 @@ class BreakTime extends Model
     }
 
     public function breakTimeFix(){
-        return $this->hasOne(BreakTimeFixes::class);
+        return $this->hasMany(BreakTimeFixes::class);
     }
 
     public function getTimeFormatted($time){

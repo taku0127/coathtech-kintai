@@ -20,11 +20,15 @@ class Attendance extends Model
     }
 
     public function attendanceFix(){
-        return $this->hasOne(AttendanceFixes::class);
+        return $this->hasMany(AttendanceFixes::class);
     }
 
     public function getTimeFormatted($time){
         return $this->$time ? Carbon::parse($this->$time)->format('H:i') : null;
+    }
+
+    public function getDateFormatted($date){
+        return $this->$date ? Carbon::parse($this->$date)->format('Y/m/d') : null;
     }
 
     public function getActualWorkTime(){

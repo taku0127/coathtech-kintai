@@ -18,6 +18,7 @@ class CreateBreakTimeFixesTable extends Migration
             $table->foreignId('break_time_id')->constrained();
             $table->time('start');
             $table->time('end');
+            $table->boolean('approval')->default(false);
             $table->timestamp('created_at')->useCurrent()->nullable();
             $table->timestamp('updated_at')->useCurrent()->nullable();
         });

@@ -12,7 +12,11 @@ class AttendanceDetailController extends Controller
 {
     //
     public function userIndex($id){
-        $attendance = Attendance::find($id);
+        $attendance = Attendance::with(['attendanceFix' => function ($query){
+            $query->notApproved()->first();
+        }])->with(['breakTimes.breakTimeFix' => function($query){
+            $query->notApproved();
+        }])->find($id);
         return view('pages.attendance_detail', compact('attendance'));
     }
     public function userStore(AttendanceRequest $request,$id){

@@ -19,6 +19,7 @@ class CreateAttendanceFixesTable extends Migration
             $table->time('clock_in');
             $table->time('clock_out');
             $table->string('note');
+            $table->boolean('approval')->default(false);
             $table->timestamp('created_at')->useCurrent()->nullable();
             $table->timestamp('updated_at')->useCurrent()->nullable();
         });
