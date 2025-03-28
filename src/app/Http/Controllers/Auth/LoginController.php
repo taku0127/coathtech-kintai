@@ -10,6 +10,7 @@ use App\Actions\Admin\AttemptToAuthenticate;
 use App\Http\Responses\LoginResponse;
 use Laravel\Fortify\Actions\PrepareAuthenticatedSession;
 use App\Responses\AdminLoginResponse;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Fortify\Contracts\LogoutResponse;
 use Laravel\Fortify\Http\Requests\LoginRequest;
 
@@ -53,6 +54,7 @@ class LoginController extends Controller
      */
     public function store(LoginRequest $request)
     {
+        if(Auth::guard('web')->check()) Auth::guard('web')->logout();
         return $this->loginPipeline($request)->then(function ($request) {
             return app(LoginResponse::class);
         });
