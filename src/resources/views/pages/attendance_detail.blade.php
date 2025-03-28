@@ -10,7 +10,7 @@
     <div class="c-layout">
         <h1 class="c-title">勤怠詳細</h1>
         <div class="p-attendanceDetail_content">
-            <form action="{{ route('user.attendance_detail',['id' => $attendance->id]) }}" method="POST">
+            <form action="{{ route('attendance_detail',['id' => $attendance->id]) }}" method="POST">
                 @csrf
                 <table class="c-formTable">
                     <tr class="c-formTable_tr">

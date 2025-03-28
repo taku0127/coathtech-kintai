@@ -28,15 +28,16 @@ Route::middleware(['auth:web','verified'])->group(function () {
     Route::patch('/attendance/break_end',[AttendanceController::class, 'storeBreakEnd'])->name('user.break_end');
     Route::patch('/attendance/clock_out',[AttendanceController::class, 'storeClockOut'])->name('user.clock_out');
     Route::get('/attendance/list',[AttendanceListController::class, 'userIndex'])->name('user.attendance_list');
-    Route::get('/attendance/{id}', [AttendanceDetailController::class, 'userIndex'])->name('user.attendance_detail');
-    Route::post('/attendance/{id}', [AttendanceDetailController::class, 'userStore']);
     Route::get('/stamp_correction_request/list', [StampCrrectionRequestController::class, 'userIndex'])->name('user.stamp_correction_request');
 });
 
 Route::middleware(['auth:admin'])->group(function(){
     Route::get('/admin/attendance/list',[AttendanceListController::class,'adminIndex'])->name('admin.attendance_list');
-    Route::get('/attendance/{id}', [AttendanceDetailController::class, 'adminIndex'])->name('admin.attendance_detail');
-    Route::post('/attendance/{id}', [AttendanceDetailController::class, 'adminStore']);
+});
+
+Route::middleware(['auth:web,admin'])->group(function(){
+    Route::get('/attendance/{id}', [AttendanceDetailController::class, 'index'])->name('attendance_detail');
+    Route::post('/attendance/{id}', [AttendanceDetailController::class, 'userStore']);
 });
 Route::get('/admin/staff/list', function () {
     return view('pages/admin/staff_list');

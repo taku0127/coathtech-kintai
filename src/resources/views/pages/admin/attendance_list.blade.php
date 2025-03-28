@@ -35,7 +35,7 @@
                         {{ $attendance->getActualWorkTime() }}
                         @endif
                     </td>
-                    <td class="c-table_td"><a href="{{ route('admin.attendance_detail',['id' => $attendance->id]) }}" class="c-table_link">詳細</a></td>
+                    <td class="c-table_td"><a href="{{ route('attendance_detail',['id' => $attendance->id]) }}" class="c-table_link">詳細</a></td>
                 </tr>
                 @endforeach
             </table>

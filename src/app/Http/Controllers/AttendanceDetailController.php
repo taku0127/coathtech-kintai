@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 class AttendanceDetailController extends Controller
 {
     //
-    public function userIndex($id){
+    public function index($id){
         $attendance = Attendance::with(['attendanceFix' => function ($query){
             $query->notApproved()->first();
         }])->with(['breakTimes.breakTimeFix' => function($query){
@@ -39,6 +39,6 @@ class AttendanceDetailController extends Controller
             ]);
         }
 
-        return redirect(route('user.attendance_detail',['id' => $id]));
+        return redirect(route('attendance_detail',['id' => $id]));
     }
 }
