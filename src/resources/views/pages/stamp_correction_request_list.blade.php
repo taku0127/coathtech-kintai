@@ -10,8 +10,8 @@
     <div class="c-layout">
         <h1 class="c-title">勤怠一覧</h1>
         <div class="p-stampCorrectionRequestList_links">
-            <a href="" class="p-stampCorrectionRequestList_link --active">承認待ち</a>
-            <a href="" class="p-stampCorrectionRequestList_link">承認済み</a>
+            <a href="{{ route('user.stamp_correction_request') }}" class="p-stampCorrectionRequestList_link{{ $pageParam == 'approval' ? "" : ' --active' }}">承認待ち</a>
+            <a href="{{ route('user.stamp_correction_request',['page' => 'approval']) }}" class="p-stampCorrectionRequestList_link{{ $pageParam == 'approval' ? ' --active' : "" }}">承認済み</a>
         </div>
         <div class="c-tableBox p-stampCorrectionRequestList_table">
             <table class="c-table">
@@ -25,7 +25,7 @@
                 </tr>
                 @foreach ($attendances as $attendance)
                 <tr class="c-table_tr">
-                    <td class="c-table_td">承認待ち</td>
+                    <td class="c-table_td">{{ $pageParam == 'approval' ? "承認済み" : "承認待ち" }}</td>
                     <td class="c-table_td">{{ $attendance->user->name}}</td>
                     <td class="c-table_td">{{ $attendance->getDateFormatted('date') }}</td>
                     <td class="c-table_td">{{ $attendance->attendanceFix[0]->note }}</td>

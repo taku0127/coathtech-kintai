@@ -17,7 +17,13 @@ class AttendanceFixes extends Model
 
     public function scopeNotApproved($query)
     {
-        return $query->where('approval', 'false');
+        return $query->where('approval', false);
+    }
+
+    public function scopeApproved($query)
+    {
+        return $query->where('approval', true);
+
     }
 
     public function getTimeFormatted($time){

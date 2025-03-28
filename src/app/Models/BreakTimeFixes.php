@@ -17,7 +17,7 @@ class BreakTimeFixes extends Model
 
     public function scopeNotApproved($query)
     {
-        return $query->where('approval', 'false');
+        return $query->where('approval', false);
     }
 
     public function getTimeFormatted($time){
