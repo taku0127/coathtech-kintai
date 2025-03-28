@@ -59,10 +59,10 @@
 
                         </td>
                     </tr>
+                    @foreach ($attendance->breakTimes as $breakTime)
                     <tr class="c-formTable_tr">
-                        <th class="c-formTable_th">休憩</th>
+                        <th class="c-formTable_th">休憩{{ $loop->iteration == 1 ? "" : $loop->iteration }}</th>
                         <td class="c-formTable_td">
-                            @foreach ($attendance->breakTimes as $breakTime)
                             <p class="c-formTable_td_content">
                                 <span class="c-formTable_td_item">
                                     @if ($attendance->approval)
@@ -94,9 +94,9 @@
                                     {{ $message }}
                                 </p>
                             @enderror
-                            @endforeach
                         </td>
                     </tr>
+                    @endforeach
                     <tr class="c-formTable_tr">
                         <th class="c-formTable_th">備考</th>
                         <td class="c-formTable_td">
