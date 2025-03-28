@@ -22,8 +22,21 @@
                     <tr class="c-formTable_tr">
                         <th class="c-formTable_th">日付</th>
                         <td class="c-formTable_td">
-                            <p class="c-formTable_td_content"><span class="c-formTable_td_item">{{ \Carbon\Carbon::parse($attendance->date)->format('Y年') }}</span><span class="c-formTable_td_item">{{ \Carbon\Carbon::parse($attendance->date)->format('n月j日') }}</span></p>
+                            <p class="c-formTable_td_content">
+                                @if (Auth::guard('admin')->check())
+                                <span class="c-formTable_td_item --wide">
+                                    <input type="date" name="date" value="{{ old('date') ??$attendance->date }}">
+                                </span>
+
+                                @else
+                                <span class="c-formTable_td_item">{{ \Carbon\Carbon::parse($attendance->date)->format('Y年') }}</span><span class="c-formTable_td_item">{{ \Carbon\Carbon::parse($attendance->date)->format('n月j日') }}</span></p>
+                                @endif
                             <p class="c-formTable_td_content"></p>
+                            @error('date')
+                                <p class="c-formTable_error">
+                                    {{ $message }}
+                                </p>
+                            @enderror
                         </td>
                     </tr>
                     <tr class="c-formTable_tr">
@@ -31,7 +44,7 @@
                         <td class="c-formTable_td">
                             <p class="c-formTable_td_content">
                                 <span class="c-formTable_td_item">
-                                    @if ($attendance->approval)
+                                    @if ($attendance->approval || Auth::guard('admin')->check())
                                     <input name="clock_in" type="text" value="{{ old('clock_in') ??$attendance->getTimeFormatted('clock_in') }}">
                                     @else
                                     {{ $attendance->attendanceFix[0]->getTimeFormatted('clock_in') }}
@@ -39,7 +52,7 @@
                                 </span>
                                 <span class="c-formTable_td_item">～</span>
                                 <span class="c-formTable_td_item">
-                                    @if ($attendance->approval)
+                                    @if ($attendance->approval || Auth::guard('admin')->check())
                                     <input name="clock_out" type="text" value="{{ old('clock_out') ?? $attendance->getTimeFormatted('clock_out'); }}">
                                     @else
                                     {{ $attendance->attendanceFix[0]->getTimeFormatted('clock_out') }}
@@ -65,7 +78,7 @@
                         <td class="c-formTable_td">
                             <p class="c-formTable_td_content">
                                 <span class="c-formTable_td_item">
-                                    @if ($attendance->approval)
+                                    @if ($attendance->approval || Auth::guard('admin')->check())
                                     <input name="break_time[start][{{ $breakTime->id }}]" type="text" value="{{ old("break_time.start.{$breakTime->id}") ?? $breakTime->getTimeFormatted('start')}}">
                                     @else
                                         @if ($breakTime->breakTimeFix->isNotEmpty())
@@ -75,7 +88,7 @@
                                 </span>
                                 <span class="c-formTable_td_item">～</span>
                                 <span class="c-formTable_td_item">
-                                    @if ( $attendance->approval )
+                                    @if ( $attendance->approval || Auth::guard('admin')->check())
                                     <input name="break_time[end][{{ $breakTime->id }}]" type="text" value="{{  old("break_time.end.{$breakTime->id}") ?? $breakTime->getTimeFormatted('end') }}">
                                     @else
                                         @if ($breakTime->breakTimeFix->isNotEmpty())
@@ -101,7 +114,7 @@
                         <th class="c-formTable_th">備考</th>
                         <td class="c-formTable_td">
                             <p class="c-formTable_td_content">
-                                @if ( $attendance->approval)
+                                @if ( $attendance->approval || Auth::guard('admin')->check())
                                 <textarea name="note" id="" cols="30" rows="5">{{ old('note') }}</textarea>
                                 @else
                                 {{ $attendance->attendanceFix[0]->note }}
@@ -115,10 +128,14 @@
                         </td>
                     </tr>
                 </table>
+                @if ($attendance->approval || Auth::guard('admin')->check())
+
                 <div class="p-attendanceDetail_btn">
                     <button class="c-btn --small">修正</button>
                 </div>
+                @else
                 <p class="p-attendanceDetail_note">*承認待ちのため修正はできません。</p>
+                @endif
             </form>
         </div>
     </div>

@@ -139,6 +139,9 @@
   width: 33%;
   text-align: center;
 }
+.c-formTable_td_item.--wide {
+  width: auto;
+}
 .c-formTable_td input, .c-formTable_td textarea {
   width: 100%;
   border: 1px solid #E1E1E1;

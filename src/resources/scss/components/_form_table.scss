@@ -29,6 +29,9 @@
         &_item{
             width: 33%;
             text-align: center;
+            &.--wide{
+                width: auto;
+            }
         }
         input,textarea{
             width: 100%;

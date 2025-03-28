@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class AttendanceRequest extends FormRequest
 {
@@ -23,7 +24,7 @@ class AttendanceRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $rules = [
             //
             'clock_in' => 'required|date_format:H:i',
             'clock_out' => 'required|date_format:H:i|after_or_equal:clock_in',
@@ -52,10 +53,15 @@ class AttendanceRequest extends FormRequest
             ],
             'note' => 'required|max:255',
         ];
+        // adminユーザーであれば、特別なバリデーションルールを追加
+        if (Auth::guard('admin')->check()) {
+            $rules['date'] = 'required';  // 例えば、admin専用フィールドを追加
+        }
+        return $rules;
     }
 
     public function messages(){
-        return [
+        $messages = [
             'clock_in.required' => '出勤時間を入力してください。',
             'clock_in.date_format' => '出勤時間は「00:00」形式で入力してください。',
             'clock_out.required' => '退勤時間を入力してください。',
@@ -72,5 +78,10 @@ class AttendanceRequest extends FormRequest
             'note.required' => '備考を記入してください',
             'note.max' => '備考は255文字以内で入力してください。',
         ];
+        // adminユーザーであれば、特別なバリデーションルールを追加
+        if (Auth::guard('admin')->check()) {
+            $messages['date.required'] = '日付を入力してください';  // 例えば、admin専用フィールドを追加
+        }
+        return $messages;
     }
 }

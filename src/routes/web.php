@@ -37,7 +37,7 @@ Route::middleware(['auth:admin'])->group(function(){
 
 Route::middleware(['auth:web,admin'])->group(function(){
     Route::get('/attendance/{id}', [AttendanceDetailController::class, 'index'])->name('attendance_detail');
-    Route::post('/attendance/{id}', [AttendanceDetailController::class, 'userStore']);
+    Route::post('/attendance/{id}', [AttendanceDetailController::class, 'store']);
 });
 Route::get('/admin/staff/list', function () {
     return view('pages/admin/staff_list');
