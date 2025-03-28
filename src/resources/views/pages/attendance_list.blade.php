@@ -30,12 +30,7 @@
                     <td class="c-table_td">{{ $attendance->getTimeFormatted('clock_in') }}</td>
                     <td class="c-table_td">{{ $attendance->getTimeFormatted('clock_out') }}</td>
                     <td class="c-table_td">
-                        @foreach ($attendance->breakTimes as $breakTime)
-                            @if ($loop->index > 0)
-                                <br>
-                            @endif
-                            {{ $breakTime->getTimeFormatted('start')}}~{{ $breakTime->getTimeFormatted('end') }}
-                        @endforeach
+                        {{ $attendance->getBreakTimesShow() }}
                     </td>
                     <td class="c-table_td">
                         @if ($attendance->clock_out)

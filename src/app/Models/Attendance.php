@@ -33,7 +33,7 @@ class Attendance extends Model
 
     public function getActualWorkTime(){
         $actualWorkMinutes = $this->workHoursLength() - $this->breakTimesLength();
-        return $actualWorkMinutes > 0 ? sprintf('%d:%02d', floor($actualWorkMinutes / 60), $actualWorkMinutes % 60) : null;
+        return $actualWorkMinutes > 0 ? sprintf('%d:%02d', floor($actualWorkMinutes / 60), $actualWorkMinutes % 60) : 0;
     }
 
     private function workHoursLength(){
@@ -51,5 +51,10 @@ class Attendance extends Model
             return $break->breakTimeLength();
         });
         return $breakMinutes;
+    }
+
+    public function getBreakTimesShow(){
+        $breakTimeLength = $this->breakTimesLength();
+        return $breakTimeLength > 0 ? sprintf('%d:%02d', floor($breakTimeLength / 60), $breakTimeLength % 60) : null;
     }
 }

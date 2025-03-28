@@ -32,8 +32,11 @@ Route::middleware(['auth:web','verified'])->group(function () {
     Route::post('/attendance/{id}', [AttendanceDetailController::class, 'userStore']);
     Route::get('/stamp_correction_request/list', [StampCrrectionRequestController::class, 'userIndex'])->name('user.stamp_correction_request');
 });
-Route::get('/admin/attendance/list', function () {
-    return view('pages/admin/attendance_list');
+
+Route::middleware(['auth:admin'])->group(function(){
+    Route::get('/admin/attendance/list',[AttendanceListController::class,'adminIndex'])->name('admin.attendance_list');
+    Route::get('/attendance/{id}', [AttendanceDetailController::class, 'adminIndex'])->name('admin.attendance_detail');
+    Route::post('/attendance/{id}', [AttendanceDetailController::class, 'adminStore']);
 });
 Route::get('/admin/staff/list', function () {
     return view('pages/admin/staff_list');
