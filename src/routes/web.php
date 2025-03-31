@@ -36,6 +36,7 @@ Route::middleware(['auth:admin'])->group(function(){
     Route::get('/admin/attendance/list',[AttendanceListController::class,'adminIndex'])->name('admin.attendance_list');
     Route::get('/admin/staff/list', [StaffController::class, 'staffListIndex'])->name('admin.staff_list');
     Route::get('/admin/attendance/staff/{id}', [StaffController::class, 'staffAttendanceIndex'])->name('admin.staff_detail');
+    Route::get('/export_csv' , [StaffController::class, 'exportCsv'])->name('exportCsv');
 });
 
 Route::middleware(['auth:web,admin'])->group(function(){

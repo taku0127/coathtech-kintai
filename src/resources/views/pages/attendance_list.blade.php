@@ -44,7 +44,7 @@
         </div>
         @if (Auth::guard('admin')->check())
         <div class="p-attendanceList_btn">
-            <a class="c-btn --small" href="{{ route('exportCsv',['id' => $user->id ,'page' => $page]) }}">CSV出力</a>
+            <a class="c-btn --small" href="{{ route('exportCsv',['id' => request()->route('id') ,'page' => $page]) }}">CSV出力</a>
         </div>
         @endif
     </div>
