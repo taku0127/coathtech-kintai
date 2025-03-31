@@ -16,21 +16,13 @@
                     <th class="c-table_th">メールアドレス</th>
                     <th class="c-table_th">月次勤怠</th>
                 </tr>
+                @foreach ($users as $user)
                 <tr class="c-table_tr">
-                    <td class="c-table_td">西 伶奈</td>
-                    <td class="c-table_td">reina.n@coachtech.com</td>
-                    <td class="c-table_td"><a href="" class="c-table_link">詳細</a></td>
+                    <td class="c-table_td">{{ $user->name }}</td>
+                    <td class="c-table_td">{{ $user->email }}</td>
+                    <td class="c-table_td"><a href="{{ route('admin.staff_detail',['id' => $user->id]) }}" class="c-table_link">詳細</a></td>
                 </tr>
-                <tr class="c-table_tr">
-                    <td class="c-table_td">西 伶奈</td>
-                    <td class="c-table_td">reina.n@coachtech.com</td>
-                    <td class="c-table_td"><a href="" class="c-table_link">詳細</a></td>
-                </tr>
-                <tr class="c-table_tr">
-                    <td class="c-table_td">西 伶奈</td>
-                    <td class="c-table_td">reina.n@coachtech.com</td>
-                    <td class="c-table_td"><a href="" class="c-table_link">詳細</a></td>
-                </tr>
+                @endforeach
             </table>
         </div>
     </div>

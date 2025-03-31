@@ -5,6 +5,7 @@ use App\Http\Controllers\AttendanceDetailController;
 use App\Http\Controllers\AttendanceListController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\StampCrrectionRequestController;
+use App\Http\Controllers\StaffController;
 use App\Models\Attendance;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -33,9 +34,7 @@ Route::middleware(['auth:web','verified'])->group(function () {
 
 Route::middleware(['auth:admin'])->group(function(){
     Route::get('/admin/attendance/list',[AttendanceListController::class,'adminIndex'])->name('admin.attendance_list');
-    Route::get('/admin/staff/list', function () {
-        return view('pages/admin/staff_list');
-    })->name('admin.staff_list');
+    Route::get('/admin/staff/list', [StaffController::class, 'staffListIndex'])->name('admin.staff_list');
     Route::get('/admin/attendance/staff/{id}', function () {
         return view('pages/attendance_detail');
     })->name('admin.staff_detail');
