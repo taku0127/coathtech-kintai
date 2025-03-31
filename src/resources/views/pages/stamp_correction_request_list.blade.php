@@ -10,8 +10,8 @@
     <div class="c-layout">
         <h1 class="c-title">勤怠一覧</h1>
         <div class="p-stampCorrectionRequestList_links">
-            <a href="{{ route('user.stamp_correction_request') }}" class="p-stampCorrectionRequestList_link{{ $pageParam == 'approval' ? "" : ' --active' }}">承認待ち</a>
-            <a href="{{ route('user.stamp_correction_request',['page' => 'approval']) }}" class="p-stampCorrectionRequestList_link{{ $pageParam == 'approval' ? ' --active' : "" }}">承認済み</a>
+            <a href="{{ route('stamp_correction_request') }}" class="p-stampCorrectionRequestList_link{{ $pageParam == 'approval' ? "" : ' --active' }}">承認待ち</a>
+            <a href="{{ route('stamp_correction_request',['page' => 'approval']) }}" class="p-stampCorrectionRequestList_link{{ $pageParam == 'approval' ? ' --active' : "" }}">承認済み</a>
         </div>
         <div class="c-tableBox p-stampCorrectionRequestList_table">
             <table class="c-table">

@@ -28,22 +28,23 @@ Route::middleware(['auth:web','verified'])->group(function () {
     Route::patch('/attendance/break_end',[AttendanceController::class, 'storeBreakEnd'])->name('user.break_end');
     Route::patch('/attendance/clock_out',[AttendanceController::class, 'storeClockOut'])->name('user.clock_out');
     Route::get('/attendance/list',[AttendanceListController::class, 'userIndex'])->name('user.attendance_list');
-    Route::get('/stamp_correction_request/list', [StampCrrectionRequestController::class, 'userIndex'])->name('user.stamp_correction_request');
+
 });
 
 Route::middleware(['auth:admin'])->group(function(){
     Route::get('/admin/attendance/list',[AttendanceListController::class,'adminIndex'])->name('admin.attendance_list');
+    Route::get('/admin/staff/list', function () {
+        return view('pages/admin/staff_list');
+    })->name('admin.staff_list');
+    Route::get('/admin/attendance/staff/{id}', function () {
+        return view('pages/attendance_detail');
+    })->name('admin.staff_detail');
 });
 
 Route::middleware(['auth:web,admin'])->group(function(){
     Route::get('/attendance/{id}', [AttendanceDetailController::class, 'index'])->name('attendance_detail');
     Route::post('/attendance/{id}', [AttendanceDetailController::class, 'store']);
-});
-Route::get('/admin/staff/list', function () {
-    return view('pages/admin/staff_list');
-});
-Route::get('/admin/attendance/staff/{id}', function () {
-    return view('pages/attendance_detail');
+    Route::get('/stamp_correction_request/list', [StampCrrectionRequestController::class, 'userIndex'])->name('stamp_correction_request');
 });
 
 Route::post('/logout', function () {
