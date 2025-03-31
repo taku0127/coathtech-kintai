@@ -8,11 +8,11 @@
 @section('content')
 <div class="c-content p-attendanceList">
     <div class="c-layout">
-        <h1 class="c-title">勤怠一覧</h1>
+        <h1 class="c-title">{{ $title ?? '勤怠一覧' }}</h1>
         <div class="c-pageNation">
-            <a href="{{ route('user.attendance_list',['page' => $page - 1]) }}" class="c-pageNation_link --prev">前月</a>
+            <a href="{{ request()->fullUrlWithQuery(['page' => $page - 1]) }}" class="c-pageNation_link --prev">前月</a>
             <span class="c-pageNation_current">{{ $year }}/{{ $month }}</span>
-            <a href="{{ route('user.attendance_list',['page' => $page + 1]) }}" class="c-pageNation_link --next">翌月</a>
+            <a href="{{ request()->fullUrlWithQuery(['page' => $page + 1]) }}" class="c-pageNation_link --next">翌月</a>
         </div>
         <div class="c-tableBox p-attendanceList_table">
             <table class="c-table">
@@ -42,6 +42,11 @@
                 @endforeach
             </table>
         </div>
+        @if (Auth::guard('admin')->check())
+        <div class="p-attendanceList_btn">
+            <a class="c-btn --small" href="{{ route('exportCsv',['id' => $user->id ,'page' => $page]) }}">CSV出力</a>
+        </div>
+        @endif
     </div>
 </div>
 @endsection

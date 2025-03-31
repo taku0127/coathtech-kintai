@@ -20,6 +20,10 @@
 .p-attendanceList_table {
   margin-top: 46px;
 }
+.p-attendanceList_btn {
+  text-align: right;
+  margin-top: 60px;
+}
 
 .p-attendance {
   padding: 209px 0 0;

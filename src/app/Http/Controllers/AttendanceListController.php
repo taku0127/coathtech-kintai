@@ -13,7 +13,7 @@ class AttendanceListController extends Controller
     public function userIndex(Request $request){
 
         $page = $request->query('page',0);
-        $targetDate = Carbon::now()->addMonths($page);
+        $targetDate = Carbon::now()->startOfMonth()->addMonths($page);
         $year = $targetDate->year;
         $month = $targetDate->month;
         $user_id = Auth::id();
