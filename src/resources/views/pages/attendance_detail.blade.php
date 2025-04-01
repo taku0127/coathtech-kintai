@@ -46,6 +46,8 @@
                                 <span class="c-formTable_td_item">
                                     @if (Route::currentRouteName() != 'admin.approve' && ($attendance->approval || Auth::guard('admin')->check()) )
                                     <input name="clock_in" type="text" value="{{ old('clock_in') ??$attendance->getTimeFormatted('clock_in') }}">
+                                    @elseif($attendance->approval)
+                                    {{ $attendance->getTimeFormatted('clock_in') }}
                                     @else
                                     {{ $attendance->attendanceFix[0]->getTimeFormatted('clock_in') }}
                                     @endif
@@ -54,6 +56,8 @@
                                 <span class="c-formTable_td_item">
                                     @if (Route::currentRouteName() != 'admin.approve' && ($attendance->approval || Auth::guard('admin')->check()) )
                                     <input name="clock_out" type="text" value="{{ old('clock_out') ?? $attendance->getTimeFormatted('clock_out'); }}">
+                                    @elseif($attendance->approval)
+                                    {{ $attendance->getTimeFormatted('clock_out') }}
                                     @else
                                     {{ $attendance->attendanceFix[0]->getTimeFormatted('clock_out') }}
                                     @endif
@@ -80,6 +84,8 @@
                                 <span class="c-formTable_td_item">
                                     @if (Route::currentRouteName() != 'admin.approve' && ($attendance->approval || Auth::guard('admin')->check()) )
                                     <input name="break_time[start][{{ $breakTime->id }}]" type="text" value="{{ old("break_time.start.{$breakTime->id}") ?? $breakTime->getTimeFormatted('start')}}">
+                                    @elseif($attendance->approval)
+                                    {{ $breakTime->getTimeFormatted('start') }}
                                     @else
                                         @if ($breakTime->breakTimeFix->isNotEmpty())
                                         {{ $breakTime->breakTimeFix[0]->getTimeFormatted('start') }}
@@ -90,6 +96,8 @@
                                 <span class="c-formTable_td_item">
                                     @if ( Route::currentRouteName() != 'admin.approve' && ($attendance->approval || Auth::guard('admin')->check()) )
                                     <input name="break_time[end][{{ $breakTime->id }}]" type="text" value="{{  old("break_time.end.{$breakTime->id}") ?? $breakTime->getTimeFormatted('end') }}">
+                                    @elseif($attendance->approval)
+                                    {{ $breakTime->getTimeFormatted('end') }}
                                     @else
                                         @if ($breakTime->breakTimeFix->isNotEmpty())
                                         {{ $breakTime->breakTimeFix[0]->getTimeFormatted('end')}}
@@ -116,6 +124,8 @@
                             <p class="c-formTable_td_content">
                                 @if ( Route::currentRouteName() != 'admin.approve' && ($attendance->approval || Auth::guard('admin')->check()) )
                                 <textarea name="note" id="" cols="30" rows="5">{{ old('note') }}</textarea>
+                                @elseif($attendance->approval)
+                                    {{ $attendance->note }}
                                 @else
                                 {{ $attendance->attendanceFix[0]->note }}
                                 @endif

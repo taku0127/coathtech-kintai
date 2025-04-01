@@ -61,7 +61,11 @@ class StampCrrectionRequestController extends Controller
     }
 
     public function adminApprove($id){
-        $attendance = Attendance::find($id);
+        $attendance = Attendance::with(['attendanceFix' => function ($query){
+            $query->notApproved()->first();
+        }])->with(['breakTimes.breakTimeFix' => function($query){
+            $query->notApproved();
+        }])->find($id);
         return view('pages.attendance_detail',compact('attendance'));
     }
 
@@ -71,7 +75,7 @@ class StampCrrectionRequestController extends Controller
         }])->with(['breakTimes.breakTimeFix' => function($query){
             $query->notApproved();
         }])->find($id);
-        $attendanceFix = $attendance->attendanceFix()->first();
+        $attendanceFix = $attendance->attendanceFix->first();
         $attendance->update([
             'approval' => true,
             'clock_in' => $attendanceFix->clock_in,
@@ -82,7 +86,7 @@ class StampCrrectionRequestController extends Controller
             'approval' => true,
         ]);
         foreach ($attendance->breakTimes as $breakTime) {
-            $breakTimeFix = $breakTime->breakTimeFix()->first();
+            $breakTimeFix = $breakTime->breakTimeFix->first();
             $breakTimeFix->update([
                 'approval' => true,
             ]);
