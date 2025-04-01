@@ -103,6 +103,11 @@
   border-radius: 5px;
   padding: 11px 41px;
 }
+.c-btn:disabled {
+  background-color: #696969;
+  color: #fff;
+  pointer-events: none;
+}
 
 .c-content {
   background-color: #F0EFF2;

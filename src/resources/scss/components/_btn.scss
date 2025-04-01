@@ -14,4 +14,9 @@
         border-radius: 5px;
         padding: 11px 41px;
     }
+    &:disabled{
+        background-color: #696969;
+        color: #fff;
+        pointer-events: none;
+    }
 }

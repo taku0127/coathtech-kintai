@@ -30,7 +30,7 @@
                     <td class="c-table_td">{{ $attendance->getDateFormatted('date') }}</td>
                     <td class="c-table_td">{{ $attendance->attendanceFix[0]->note }}</td>
                     <td class="c-table_td">{{ $attendance->attendanceFix[0]->getDateFormatted('created_at') }}</td>
-                    <td class="c-table_td"><a href="{{ route('attendance_detail',['id' => $attendance->id]) }}" class="c-table_link">詳細</a></td>
+                    <td class="c-table_td"><a href="{{ Auth::guard('admin')->check() ? route('admin.approve',['id' => $attendance->id]) : route('attendance_detail',['id' => $attendance->id]) }}" class="c-table_link">詳細</a></td>
                 </tr>
                 @endforeach
             </table>

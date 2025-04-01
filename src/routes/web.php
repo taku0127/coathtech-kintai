@@ -37,12 +37,14 @@ Route::middleware(['auth:admin'])->group(function(){
     Route::get('/admin/staff/list', [StaffController::class, 'staffListIndex'])->name('admin.staff_list');
     Route::get('/admin/attendance/staff/{id}', [StaffController::class, 'staffAttendanceIndex'])->name('admin.staff_detail');
     Route::get('/export_csv' , [StaffController::class, 'exportCsv'])->name('exportCsv');
+    Route::get('/stamp_correction_request/approve/{id}', [StampCrrectionRequestController::class, 'adminApprove'])->name('admin.approve');
+    Route::post('/stamp_correction_request/approve/{id}', [StampCrrectionRequestController::class, 'adminApproveStore']);
 });
 
 Route::middleware(['auth:web,admin'])->group(function(){
     Route::get('/attendance/{id}', [AttendanceDetailController::class, 'index'])->name('attendance_detail');
     Route::post('/attendance/{id}', [AttendanceDetailController::class, 'store']);
-    Route::get('/stamp_correction_request/list', [StampCrrectionRequestController::class, 'userIndex'])->name('stamp_correction_request');
+    Route::get('/stamp_correction_request/list', [StampCrrectionRequestController::class, 'index'])->name('stamp_correction_request');
 });
 
 Route::post('/logout', function () {
