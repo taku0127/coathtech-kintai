@@ -4,7 +4,7 @@
     </div>
     <ul class="c-header_menuLists">
         @if (Auth::guard('web')->check())
-        <li class="c-header_menuList"><a href="">勤怠</a></li>
+        <li class="c-header_menuList"><a href="{{ route('user.attendance') }}">勤怠</a></li>
         <li class="c-header_menuList"><a href="{{  route('user.attendance_list') }}">勤怠一覧</a></li>
         <li class="c-header_menuList"><a href="{{ route('stamp_correction_request') }}">申請</a></li>
         @elseif (Auth::guard('admin')->check())

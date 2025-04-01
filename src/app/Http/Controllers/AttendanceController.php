@@ -15,7 +15,8 @@ class AttendanceController extends Controller
     }
 
     public function index(){
-        $attendance = Attendance::where('user_id', 1)
+        $user_id = Auth::id();
+        $attendance = Attendance::where('user_id', $user_id)
         ->where('date', now()->format('Y-m-d'))
         ->first();
         $isBreak = $attendance ? $this->isBreakStart($attendance->id) : false;
