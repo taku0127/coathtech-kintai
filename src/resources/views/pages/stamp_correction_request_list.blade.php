@@ -8,7 +8,7 @@
 @section('content')
 <div class="c-content p-stampCorrectionRequestList">
     <div class="c-layout">
-        <h1 class="c-title">勤怠一覧</h1>
+        <h1 class="c-title">申請一覧</h1>
         <div class="p-stampCorrectionRequestList_links">
             <a href="{{ route('stamp_correction_request') }}" class="p-stampCorrectionRequestList_link{{ $pageParam == 'approval' ? "" : ' --active' }}">承認待ち</a>
             <a href="{{ route('stamp_correction_request',['page' => 'approval']) }}" class="p-stampCorrectionRequestList_link{{ $pageParam == 'approval' ? ' --active' : "" }}">承認済み</a>
