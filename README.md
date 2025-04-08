@@ -5,21 +5,12 @@
 - Docker ビルド
   1. git clone git@github.com:taku0127/coathtech-kintai.git
   2. cd coathtech-kintai/
-  3. docker-compose up -d --build
+  3. make init
      ※MySQL は、OS によって起動しない場合があるのでそれぞれの PC に合わせて docker-compose.yml ファイルを編集してください。
 - Laravel 環境構築
-  1. docker-compose exec php bash
-  2. composer install
-  3. .env.example ファイルから.env をコピーし、環境変数を設定
-     - DB\_\*を独自の環境変数へ変更
-  4. php artisan key:generate
-  5. php artisan migrate
-  6. php artisan db:seed
-  7. chmod -R 777 ./\*
+  1. 上記のmake initで設定済み
 - sass の仕様
-  1. cd src/ (src ディレクトリに入る)
-  2. npm install
-  3. npm run watch
+  1. make npm-watch
   4. src/resources/scss/配下で編集
 - テストの実行
   1. docker-compose exec mysql mysql -u root -p
