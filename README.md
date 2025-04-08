@@ -41,3 +41,13 @@
 - 開発環境：http://localhost/
 - 開発環境(phpmyadmin)：http://localhost:8080/
 - mailhog(メール受信テスト用): http://localhost:8025/
+
+## テストアカウント
+
+- 管理者アカウント
+  - ID:admin@example.com
+  - PW:00000000
+- スタッフアカウント
+  - ID:staff@example.com
+  - PW:00000000
+    
