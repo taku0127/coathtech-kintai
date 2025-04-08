@@ -17,7 +17,7 @@ class AttendanceListController extends Controller
         $year = $targetDate->year;
         $month = $targetDate->month;
         $user_id = Auth::id();
-        $attendances = Attendance::where('user_id', $user_id)->whereYear('date',$year)->whereMonth('date',$month)->orderBy('date','desc')->get();
+        $attendances = Attendance::where('user_id', $user_id)->whereYear('date',$year)->whereMonth('date',$month)->orderBy('date','asc')->get();
         return view('pages.attendance_list', compact('attendances','year','month','page'));
     }
 

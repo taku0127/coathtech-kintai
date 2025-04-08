@@ -25,6 +25,9 @@
             &:not(:first-child){
                 margin-top: 5px;
             }
+            &_note{
+                padding-left: 30px;
+            }
         }
         &_item{
             width: 33%;

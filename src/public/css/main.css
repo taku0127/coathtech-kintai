@@ -140,6 +140,9 @@
 .c-formTable_td_content:not(:first-child) {
   margin-top: 5px;
 }
+.c-formTable_td_content_note {
+  padding-left: 30px;
+}
 .c-formTable_td_item {
   width: 33%;
   text-align: center;

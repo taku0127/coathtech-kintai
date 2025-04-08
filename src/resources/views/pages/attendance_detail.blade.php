@@ -127,7 +127,7 @@
                                 @elseif($attendance->approval)
                                     {{ $attendance->note }}
                                 @else
-                                {{ $attendance->attendanceFix[0]->note }}
+                                <span class="c-formTable_td_content_note">{{ $attendance->attendanceFix[0]->note }}</span>
                                 @endif
                             </p>
                             @error("note")
