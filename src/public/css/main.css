@@ -166,14 +166,29 @@
   justify-content: space-between;
   align-items: center;
 }
+@media screen and (max-width: 850px) {
+  .c-header {
+    display: block;
+  }
+}
 .c-header_menuList {
   font-size: 24px;
   font-weight: 700;
+}
+@media screen and (max-width: 850px) {
+  .c-header_menuList {
+    margin-top: 15px;
+  }
 }
 .c-header_menuLists {
   display: flex;
   color: #fff;
   justify-content: right;
+}
+@media screen and (max-width: 850px) {
+  .c-header_menuLists {
+    justify-content: left;
+  }
 }
 .c-header_menuList:not(:first-child) {
   margin-left: 53px;
@@ -183,6 +198,11 @@
   width: 900px;
   padding: 91px 0 30px;
   margin: 0 auto;
+}
+@media screen and (max-width: 850px) {
+  .c-layout {
+    width: 95%;
+  }
 }
 
 .c-pageNation {

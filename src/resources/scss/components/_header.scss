@@ -6,11 +6,20 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    @include tabView{
+        display: block;
+    }
     &_menuList{
+        @include tabView{
+            margin-top: 15px;
+        }
         &s{
             display: flex;
             color: #fff;
             justify-content: right;
+            @include tabView{
+                justify-content: left;
+            }
         }
         font-size: 24px;
         font-weight: 700;

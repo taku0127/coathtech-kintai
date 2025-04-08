@@ -227,6 +227,7 @@ button,
 [type=reset],
 [type=submit] {
   cursor: pointer;
+  vertical-align: baseline;
 }
 
 button:disabled,

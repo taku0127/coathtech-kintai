@@ -1,5 +1,9 @@
+@use "../abstracts/forward" as *;
 .c-layout{
     width: 900px;
     padding: 91px 0 30px;
     margin: 0 auto;
+    @include tabView{
+        width: 95%;
+    }
 }
