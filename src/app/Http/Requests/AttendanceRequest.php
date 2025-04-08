@@ -55,7 +55,7 @@ class AttendanceRequest extends FormRequest
         ];
         // adminユーザーであれば、特別なバリデーションルールを追加
         if (Auth::guard('admin')->check()) {
-            $rules['date'] = 'required';  // 例えば、admin専用フィールドを追加
+            $rules['date'] = 'required';
         }
         return $rules;
     }
@@ -80,7 +80,7 @@ class AttendanceRequest extends FormRequest
         ];
         // adminユーザーであれば、特別なバリデーションルールを追加
         if (Auth::guard('admin')->check()) {
-            $messages['date.required'] = '日付を入力してください';  // 例えば、admin専用フィールドを追加
+            $messages['date.required'] = '日付を入力してください';
         }
         return $messages;
     }
