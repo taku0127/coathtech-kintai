@@ -23,7 +23,7 @@ class StaffController extends Controller
         $targetDate = Carbon::now()->startOfMonth()->addMonths($page);
         $year = $targetDate->year;
         $month = $targetDate->month;
-        $attendances = Attendance::where('user_id', $user->id)->whereYear('date',$year)->whereMonth('date',$month)->orderBy('date','desc')->get();
+        $attendances = Attendance::where('user_id', $user->id)->whereYear('date',$year)->whereMonth('date',$month)->orderBy('date','asc')->get();
         $title = $user->name.'さんの勤怠';
         return view('pages.attendance_list',compact('attendances','page','year','month','title'));
     }
