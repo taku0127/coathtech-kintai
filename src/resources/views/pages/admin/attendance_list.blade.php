@@ -11,7 +11,7 @@
         <h1 class="c-title">{{ $dateInfo['year'] }}年{{ $dateInfo['month'] }}月{{ $dateInfo['day'] }}日の勤怠</h1>
         <div class="c-pageNation">
             <a href="{{ route('admin.attendance_list',['page' => $page - 1]) }}" class="c-pageNation_link --prev">前日</a>
-            <span class="c-pageNation_current">{{ $dateInfo['year'] }}/{{ $dateInfo['month'] }}/{{ $dateInfo['day'] }}</span>
+            <span class="c-pageNation_current">{{ $dateInfo['year'] }}/{{ str_pad($dateInfo['month'], 2, '0', STR_PAD_LEFT) }}/{{ str_pad($dateInfo['day'], 2, '0', STR_PAD_LEFT) }}</span>
             <a href="{{ route('admin.attendance_list',['page' => $page + 1]) }}" class="c-pageNation_link --next">翌日</a>
         </div>
         <div class="c-tableBox p-attendanceList_table">
