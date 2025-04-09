@@ -125,7 +125,7 @@
                                 @if ( Route::currentRouteName() != 'admin.approve' && ($attendance->approval || Auth::guard('admin')->check()) )
                                 <textarea name="note" id="" cols="30" rows="5">{{ old('note') }}</textarea>
                                 @elseif($attendance->approval)
-                                    {{ $attendance->note }}
+                                    <span class="c-formTable_td_content_note">{{ $attendance->note }}</span>
                                 @else
                                 <span class="c-formTable_td_content_note">{{ $attendance->attendanceFix[0]->note }}</span>
                                 @endif
