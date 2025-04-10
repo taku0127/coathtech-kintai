@@ -2,12 +2,11 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\DB;
-use Tests\TestCase;
+use Tests\Feature\Helpers\AbstractTestCase;
 
-class AuthTest extends TestCase
+class AuthTest extends AbstractTestCase
 {
     /**
      * A basic feature test example.
@@ -16,20 +15,6 @@ class AuthTest extends TestCase
      */
 
 
-    use RefreshDatabase;
-
-    private $REGISTER_PATH = '/register';
-    private $USER_LOGIN_PATH = '/login';
-    private $ADMIN_LOGIN_PATH = '/admin/login';
-    private $LOGOUT_PATH = '/logout';
-
-     // 各テスト前に実行される
-     protected function setUp(): void
-     {
-         parent::setUp();
-         $this->artisan('migrate:fresh'); //  IDの自動採番をリセット
-         $this->seed(); // シーダー実行
-     }
     ///////////////////////////認証機能（一般ユーザー）//////////////////////////////////
     // 名前が未入力の場合、バリデーションメッセージが表示される
     public function test_register_required_name()
