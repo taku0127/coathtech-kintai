@@ -18,6 +18,7 @@ abstract class AbstractTestCase extends TestCase{
     protected $ADMIN_LOGIN_PATH = '/admin/login';
     protected $LOGOUT_PATH = '/logout';
     protected $ATTENDANCE_PATH = '/attendance';
+    protected $ATTENDANCE_TABLE = 'attendances';
 
      // 各テスト前に実行される
      protected function setUp(): void
