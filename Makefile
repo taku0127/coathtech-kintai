@@ -18,3 +18,6 @@ npm-watch:
 
 stop-watch:
 	kill `cat watch.pid` && rm watch.pid
+
+dusk-init:
+	docker compose exec php php artisan dusk:install
