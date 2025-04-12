@@ -18,11 +18,6 @@ class AttendanceTest extends AbstractTestCase
      *
      * @return void
      */
-    protected $ATTENDANCE_LIST_PATH = '/attendance/list';
-    protected $ATTENDANCE_REST_START_PATH = '/attendance/break_start';
-    protected $ATTENDANCE_REST_END_PATH = '/attendance/break_end';
-    protected $ATTENDANCE_CLOCK_OUT = '/attendance/clock_out';
-    protected $BREAKTIME_TABLE = 'break_times';
     ///////////////////////////日時取得機能//////////////////////////////////
 
     //  現在の日時情報がUIと同じ形式で出力されている
@@ -411,18 +406,6 @@ class AttendanceTest extends AbstractTestCase
         $response->assertSeeInOrder($checkData);
     }
 
-    // 処理用関数
-    protected function getCurrentDateTime($dateType="Y-m-d",$timeType="H:i",?Closure $dateOptions = null){
-        $date = Carbon::now();
-        $date->locale('ja');
-        $currentDateTime = [
-            'date' => $date->format($dateType),
-            'time' => $date->format($timeType)
-        ];
-        if ($dateOptions) {
-            $currentDateTime['date'] .= $dateOptions($date); // クロージャを呼び出して結果を追加
-        }
-        return $currentDateTime;
-    }
+
 
 }
