@@ -26,6 +26,8 @@ abstract class AbstractTestCase extends TestCase{
     protected $ATTENDANCE_REST_END_PATH = '/attendance/break_end';
     protected $ATTENDANCE_CLOCK_OUT = '/attendance/clock_out';
     protected $BREAKTIME_TABLE = 'break_times';
+    protected $ADMIN_STAMP_CORRECTION_REQUEST = '/stamp_correction_request/list';
+    protected $ADMIN_STAMP_CORRECTION_REQUEST_APPROVE = '/stamp_correction_request/approve';
 
      // 各テスト前に実行される
      protected function setUp(): void
