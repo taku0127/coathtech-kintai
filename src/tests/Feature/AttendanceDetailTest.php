@@ -533,4 +533,199 @@ class AttendanceDetailTest extends AbstractTestCase
         $response = $this->followingRedirects()->post($this->ATTENDANCE_PATH."/".$attendance->id,$checkData);
         $response->assertSee('備考を記入してください');
     }
+
+
+    ////////////////////勤怠情報修正機能（管理者）///////////////////////////
+    // 承認待ちの修正申請が全て表示されている
+    public function test_admin_stamp_correction_request_list(){
+
+        // ログインする
+        $user = User::find(1);
+        $this->actingAs($user);
+        // 勤怠詳細ページを開く
+        $attendance = Attendance::with('breakTimes')->where('user_id', $user->id)->latest('id')->first();
+
+        // 出勤時間と退勤時刻で入力
+        $clock_in = Carbon::parse($attendance->clock_in)->addMinute();
+        $clock_out = Carbon::parse($attendance->clock_out)->addMinute();
+        $clock_inFormat = $clock_in->format('H:i');
+        $clock_outFormat = $clock_out->format('H:i');
+        $postData = [
+            'clock_in' => $clock_inFormat,
+            'clock_out' => $clock_outFormat,
+            'note' => 'test'
+        ];
+        // 休憩の追加
+        foreach ($attendance->breakTimes as $breakTime) {
+            $breakTimeStartFormat = Carbon::parse($breakTime->start)->addMinute()->format('H:i');
+            $breakTimeEndFormat = Carbon::parse($breakTime->end)->addMinute()->format('H:i');
+            $postData['break_time']['start'][$breakTime->id] = $breakTimeStartFormat;
+            $postData['break_time']['end'][$breakTime->id] = $breakTimeEndFormat;
+        }
+        $response = $this->followingRedirects()->post($this->ATTENDANCE_PATH."/".$attendance->id,$postData);
+        $this->post('/logout');
+
+        //管理者ログイン
+        $admin = Admin::find(1);
+        $this->actingAs($admin,'admin');
+
+        // 申請一覧画面確認
+        $response = $this->get($this->ADMIN_STAMP_CORRECTION_REQUEST);
+        $response->assertStatus(200);
+        $response->assertSee($user->name);
+        $response->assertSee($postData['note']);
+
+    }
+    // 承認済みの修正申請が全て表示されている
+    public function test_admin_stamp_correction_request_list_approval(){
+
+        // ログインする
+        $user = User::find(1);
+        $this->actingAs($user);
+        // 勤怠詳細ページを開く
+        $attendance = Attendance::with('breakTimes')->where('user_id', $user->id)->latest('id')->first();
+        $response = $this->get($this->ATTENDANCE_PATH."/".$attendance->id);
+        $response->assertStatus(200);
+
+        // 出勤時間と退勤時刻で入力
+        $clock_in = Carbon::parse($attendance->clock_in)->addMinute();
+        $clock_out = Carbon::parse($attendance->clock_out)->addMinute();
+        $clock_inFormat = $clock_in->format('H:i');
+        $clock_outFormat = $clock_out->format('H:i');
+        $postData = [
+            'clock_in' => $clock_inFormat,
+            'clock_out' => $clock_outFormat,
+            'note' => 'test'
+        ];
+        // 休憩の追加
+        foreach ($attendance->breakTimes as $breakTime) {
+            $breakTimeStartFormat = Carbon::parse($breakTime->start)->addMinute()->format('H:i');
+            $breakTimeEndFormat = Carbon::parse($breakTime->end)->addMinute()->format('H:i');
+            $postData['break_time']['start'][$breakTime->id] = $breakTimeStartFormat;
+            $postData['break_time']['end'][$breakTime->id] = $breakTimeEndFormat;
+        }
+        $response = $this->followingRedirects()->post($this->ATTENDANCE_PATH."/".$attendance->id,$postData);
+        $this->post('/logout');
+
+        //管理者ログイン
+        $admin = Admin::find(1);
+        $this->actingAs($admin,'admin');
+        // 承認処理
+        $response = $this->followingRedirects()->post($this->ADMIN_STAMP_CORRECTION_REQUEST_APPROVE."/".$attendance->id);
+
+        // 申請一覧画面確認
+        $response = $this->get($this->ADMIN_STAMP_CORRECTION_REQUEST."?page=approval");
+        $response->assertStatus(200);
+        $response->assertSee($user->name);
+        $response->assertSee($postData['note']);
+
+    }
+    // 修正申請の詳細内容が正しく表示されている
+    public function test_admin_check_correction_request(){
+
+        // ログインする
+        $user = User::find(1);
+        $this->actingAs($user);
+        // 勤怠詳細ページを開く
+        $attendance = Attendance::with('breakTimes')->where('user_id', $user->id)->latest('id')->first();
+        $response = $this->get($this->ATTENDANCE_PATH."/".$attendance->id);
+        $response->assertStatus(200);
+
+        // 出勤時間と退勤時刻で入力
+        $clock_in = Carbon::parse($attendance->clock_in)->addMinute();
+        $clock_out = Carbon::parse($attendance->clock_out)->addMinute();
+        $clock_inFormat = $clock_in->format('H:i');
+        $clock_outFormat = $clock_out->format('H:i');
+        $postData = [
+            'clock_in' => $clock_inFormat,
+            'clock_out' => $clock_outFormat,
+            'note' => 'test'
+        ];
+        // 休憩の追加
+        foreach ($attendance->breakTimes as $breakTime) {
+            $breakTimeStartFormat = Carbon::parse($breakTime->start)->addMinute()->format('H:i');
+            $breakTimeEndFormat = Carbon::parse($breakTime->end)->addMinute()->format('H:i');
+            $postData['break_time']['start'][$breakTime->id] = $breakTimeStartFormat;
+            $postData['break_time']['end'][$breakTime->id] = $breakTimeEndFormat;
+        }
+        $response = $this->followingRedirects()->post($this->ATTENDANCE_PATH."/".$attendance->id,$postData);
+        $this->post('/logout');
+
+        //管理者ログイン
+        $admin = Admin::find(1);
+        $this->actingAs($admin,'admin');
+
+        // 申請画面確認
+        $response = $this->get($this->ADMIN_STAMP_CORRECTION_REQUEST_APPROVE."/".$attendance->id);
+        $response->assertStatus(200);
+        foreach ($postData as $key => $value) {
+            if($key == 'break_time'){
+                $checkKeys = ['start','end'];
+                foreach ($checkKeys as $checkKey) {
+                    foreach($postData[$key][$checkKey] as $value){
+                        $response->assertSee($value);
+                    }
+                }
+            }else{
+                $response->assertSee($value);
+            }
+        }
+
+    }
+    // 修正申請の承認処理が正しく行われる
+    public function test_admin_approval(){
+
+        // ログインする
+        $user = User::find(1);
+        $this->actingAs($user);
+        // 勤怠詳細ページを開く
+        $attendance = Attendance::with('breakTimes')->where('user_id', $user->id)->latest('id')->first();
+        $response = $this->get($this->ATTENDANCE_PATH."/".$attendance->id);
+        $response->assertStatus(200);
+
+        // 出勤時間と退勤時刻で入力
+        $clock_in = Carbon::parse($attendance->clock_in)->addMinute();
+        $clock_out = Carbon::parse($attendance->clock_out)->addMinute();
+        $clock_inFormat = $clock_in->format('H:i');
+        $clock_outFormat = $clock_out->format('H:i');
+        $postData = [
+            'clock_in' => $clock_inFormat,
+            'clock_out' => $clock_outFormat,
+            'note' => 'test'
+        ];
+        // 休憩の追加
+        foreach ($attendance->breakTimes as $breakTime) {
+            $breakTimeStartFormat = Carbon::parse($breakTime->start)->addMinute()->format('H:i');
+            $breakTimeEndFormat = Carbon::parse($breakTime->end)->addMinute()->format('H:i');
+            $postData['break_time']['start'][$breakTime->id] = $breakTimeStartFormat;
+            $postData['break_time']['end'][$breakTime->id] = $breakTimeEndFormat;
+        }
+        $response = $this->followingRedirects()->post($this->ATTENDANCE_PATH."/".$attendance->id,$postData);
+        $this->post('/logout');
+
+        //管理者ログイン
+        $admin = Admin::find(1);
+        $this->actingAs($admin,'admin');
+
+        // 承認処理
+        $this->post($this->ADMIN_STAMP_CORRECTION_REQUEST_APPROVE."/".$attendance->id);
+
+        // 申請画面確認
+        $response = $this->get($this->ATTENDANCE_PATH."/".$attendance->id);
+        $response->assertStatus(200);
+        unset($postData['note']);
+        foreach ($postData as $key => $value) {
+            if($key == 'break_time'){
+                $checkKeys = ['start','end'];
+                foreach ($checkKeys as $checkKey) {
+                    foreach($postData[$key][$checkKey] as $value){
+                        $response->assertSee($value);
+                    }
+                }
+            }else{
+                $response->assertSee($value);
+            }
+        }
+
+    }
 }
