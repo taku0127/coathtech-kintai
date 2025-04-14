@@ -18,6 +18,7 @@ abstract class AbstractTestCase extends TestCase{
     protected $REGISTER_PATH = '/register';
     protected $USER_LOGIN_PATH = '/login';
     protected $ADMIN_LOGIN_PATH = '/admin/login';
+    protected $ADMIN_ATTENDANCE_LIST = 'admin/attendance/list';
     protected $LOGOUT_PATH = '/logout';
     protected $ATTENDANCE_PATH = '/attendance';
     protected $ATTENDANCE_TABLE = 'attendances';
