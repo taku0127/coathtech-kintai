@@ -389,4 +389,148 @@ class AttendanceDetailTest extends AbstractTestCase
         $response->assertStatus(200);
         $response->assertSee($postData['note']);
     }
+
+    ////////////////////勤怠詳細情報取得・修正機能（管理者）///////////////////////////
+    // 勤怠詳細画面に表示されるデータが選択したものになっている
+    public function test_admin_view(){
+        //管理者ログイン
+        $admin = Admin::find(1);
+        $this->actingAs($admin,'admin');
+
+        // 勤怠詳細画面を開く
+        $attendance = Attendance::with('breakTimes')->latest('id')->first();
+        $response = $this->get($this->ATTENDANCE_PATH."/".$attendance->id);
+        $response->assertStatus(200);
+
+        // 内容確認
+        $checkData = [
+            Carbon::parse($attendance->date)->format('Y-m-d'),
+            $attendance->getTimeFormatted('clock_in'),
+            $attendance->getTimeFormatted('clock_out'),
+        ];
+        foreach ($attendance->breakTimes as $breakTime) {
+            $checkData[] = $breakTime->getTimeFormatted('start');
+            $checkData[] = $breakTime->getTimeFormatted('end');
+        }
+        $response->assertSeeInOrder($checkData);
+    }
+    // 出勤時間が退勤時間より後になっている場合、エラーメッセージが表示される
+    public function test_admin_validation_clock_in(){
+        //管理者ログイン
+        $admin = Admin::find(1);
+        $this->actingAs($admin,'admin');
+
+        // 勤怠詳細画面を開く
+        $attendance = Attendance::with('breakTimes')->latest('id')->first();
+        $response = $this->get($this->ATTENDANCE_PATH."/".$attendance->id);
+        $response->assertStatus(200);
+
+        // 出勤時間が退勤時間より後の時間で修正
+        $clock_in = Carbon::parse($attendance->clock_in);
+        $clock_out = $clock_in->copy()->subMinutes(30);
+        $clock_inFormat = $clock_in->format('H:i');
+        $clock_outFormat = $clock_out->format('H:i');
+        $postData = [
+            'date' => Carbon::parse($attendance->date)->format('Y-m-d'),
+            'clock_in' => $clock_inFormat,
+            'clock_out' => $clock_outFormat,
+            'note' => 'test'
+        ];
+        foreach ($attendance->breakTimes as $breakTime) {
+            $postData['break_time']['start'][$breakTime->id] = $breakTime->getTimeFormatted('start');
+            $postData['break_time']['end'][$breakTime->id] = $breakTime->getTimeFormatted('end');
+        }
+        $response = $this->followingRedirects()->post($this->ATTENDANCE_PATH."/".$attendance->id,$postData);
+        $response->assertSee('出勤時間もしくは退勤時間が不適切な値です');
+
+    }
+    // 休憩開始時間が退勤時間より後になっている場合、エラーメッセージが表示される
+    public function test_admin_validation_break_start(){
+        //管理者ログイン
+        $admin = Admin::find(1);
+        $this->actingAs($admin,'admin');
+
+        // 勤怠詳細画面を開く
+        $attendance = Attendance::with('breakTimes')->latest('id')->first();
+        $response = $this->get($this->ATTENDANCE_PATH."/".$attendance->id);
+        $response->assertStatus(200);
+
+        // 休憩開始が退勤時間より後の時間で修正
+        $clock_in = Carbon::parse($attendance->clock_in);
+        $clock_out = Carbon::parse($attendance->clock_out);
+        $clock_inFormat = $clock_in->format('H:i');
+        $clock_outFormat = $clock_out->format('H:i');
+        $checkData = [
+            'date' => Carbon::parse($attendance->date)->format('Y-m-d'),
+            'clock_in' => $clock_inFormat,
+            'clock_out' => $clock_outFormat,
+            'note' => 'test'
+        ];
+        foreach ($attendance->breakTimes as $breakTime) {
+            $checkData['break_time']['start'][$breakTime->id] = $clock_out->copy()->addMinutes(30)->format('H:i');
+            $checkData['break_time']['end'][$breakTime->id] = $breakTime->getTimeFormatted('end');
+        }
+        $response = $this->followingRedirects()->post($this->ATTENDANCE_PATH."/".$attendance->id,$checkData);
+        $response->assertSee('出勤時間もしくは退勤時間が不適切な値です');
+
+    }
+    // 休憩終了時間が退勤時間より後になっている場合、エラーメッセージが表示される
+    public function test_admin_validation_break_end(){
+        //管理者ログイン
+        $admin = Admin::find(1);
+        $this->actingAs($admin,'admin');
+
+        // 勤怠詳細画面を開く
+        $attendance = Attendance::with('breakTimes')->latest('id')->first();
+        $response = $this->get($this->ATTENDANCE_PATH."/".$attendance->id);
+        $response->assertStatus(200);
+
+        // 休憩開始が退勤時間より後の時間で修正
+        $clock_in = Carbon::parse($attendance->clock_in);
+        $clock_out = Carbon::parse($attendance->clock_out);
+        $clock_inFormat = $clock_in->format('H:i');
+        $clock_outFormat = $clock_out->format('H:i');
+        $checkData = [
+            'date' => Carbon::parse($attendance->date)->format('Y-m-d'),
+            'clock_in' => $clock_inFormat,
+            'clock_out' => $clock_outFormat,
+            'note' => 'test'
+        ];
+        foreach ($attendance->breakTimes as $breakTime) {
+            $checkData['break_time']['start'][$breakTime->id] = $breakTime->getTimeFormatted('start');
+            $checkData['break_time']['end'][$breakTime->id] = $clock_out->copy()->addMinutes(30)->format('H:i');
+        }
+        $response = $this->followingRedirects()->post($this->ATTENDANCE_PATH."/".$attendance->id,$checkData);
+        $response->assertSee('出勤時間もしくは退勤時間が不適切な値です');
+
+    }
+    // 備考欄が未入力の場合のエラーメッセージが表示される
+    public function test_admin_validation_note(){
+        //管理者ログイン
+        $admin = Admin::find(1);
+        $this->actingAs($admin,'admin');
+
+        // 勤怠詳細画面を開く
+        $attendance = Attendance::with('breakTimes')->latest('id')->first();
+        $response = $this->get($this->ATTENDANCE_PATH."/".$attendance->id);
+        $response->assertStatus(200);
+
+        // 休憩開始が退勤時間より後の時間で修正
+        $clock_in = Carbon::parse($attendance->clock_in);
+        $clock_out = Carbon::parse($attendance->clock_out);
+        $clock_inFormat = $clock_in->format('H:i');
+        $clock_outFormat = $clock_out->format('H:i');
+        $checkData = [
+            'date' => Carbon::parse($attendance->date)->format('Y-m-d'),
+            'clock_in' => $clock_inFormat,
+            'clock_out' => $clock_outFormat,
+            'note' => ''
+        ];
+        foreach ($attendance->breakTimes as $breakTime) {
+            $checkData['break_time']['start'][$breakTime->id] = $breakTime->getTimeFormatted('start');
+            $checkData['break_time']['end'][$breakTime->id] = $breakTime->getTimeFormatted('end');
+        }
+        $response = $this->followingRedirects()->post($this->ATTENDANCE_PATH."/".$attendance->id,$checkData);
+        $response->assertSee('備考を記入してください');
+    }
 }
