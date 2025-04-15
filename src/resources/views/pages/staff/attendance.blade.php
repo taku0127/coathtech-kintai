@@ -10,7 +10,7 @@
 
 @section('content')
 <div class="c-content p-attendance">
-    <span class="p-attendance_label">{{ $attendance ? ($isBreak ? '休憩中' : ($attendance->clock_out ? '退勤済' : '出勤中')) : '出勤外'  }}</span>
+    <span class="p-attendance_label">{{ $attendance ? ($isBreak ? '休憩中' : ($attendance->clock_out ? '退勤済' : '出勤中')) : '勤務外'  }}</span>
     <div class="p-attendance_date js-currentDay"></div>
     <div class="p-attendance_time js-currentTime"></div>
     @if (!($attendance && $attendance->clock_out))
