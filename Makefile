@@ -4,7 +4,7 @@ init:
 	docker-compose exec php cp .env.example .env
 	docker-compose exec php php artisan key:generate
 	@make fresh
-	chmod -R 777 ./*
+	docker-compose exec php bash && chmod -R 777 ./*
 	@make npm-setup
 
 fresh:
