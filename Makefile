@@ -4,7 +4,7 @@ init:
 	docker-compose exec php cp .env.example .env
 	docker-compose exec php php artisan key:generate
 	@make fresh
-	chmod -R 777 ./*
+	docker-compose exec php bash -c "chmod -R 777 storage bootstrap/cache"
 	@make npm-setup
 
 fresh:
@@ -21,3 +21,5 @@ stop-watch:
 
 dusk-init:
 	docker compose exec php php artisan dusk:install
+	docker-compose exec php bash -c "chmod -R 777 storage bootstrap/cache"
+	rm -f src/tests/Browser/ExampleTest.php
