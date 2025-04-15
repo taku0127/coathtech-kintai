@@ -26,11 +26,11 @@
                 @foreach ($attendances as $attendance)
                 <tr class="c-table_tr">
                     <td class="c-table_td">{{ $pageParam == 'approval' ? "承認済み" : "承認待ち" }}</td>
-                    <td class="c-table_td">{{ $attendance->user->name}}</td>
-                    <td class="c-table_td">{{ $attendance->getDateFormatted('date') }}</td>
-                    <td class="c-table_td">{{ $attendance->approval ? $attendance->note : $attendance->attendanceFix[0]->note }}</td>
-                    <td class="c-table_td">{{ $attendance->attendanceFix[0]->getDateFormatted('created_at') }}</td>
-                    <td class="c-table_td"><a href="{{ Auth::guard('admin')->check() ? route('admin.approve',['id' => $attendance->id]) : route('attendance_detail',['id' => $attendance->id]) }}" class="c-table_link">詳細</a></td>
+                    <td class="c-table_td">{{ $attendance->attendance->user->name}}</td>
+                    <td class="c-table_td">{{ $attendance->attendance->getDateFormatted('date') }}</td>
+                    <td class="c-table_td">{{ $attendance->note }}</td>
+                    <td class="c-table_td">{{ $attendance->getDateFormatted('created_at') }}</td>
+                    <td class="c-table_td"><a href="{{ Auth::guard('admin')->check() ? route('admin.approve',['id' => $attendance->attendance->id]) : route('attendance_detail',['id' => $attendance->attendance->id]) }}" class="c-table_link">詳細</a></td>
                 </tr>
                 @endforeach
             </table>

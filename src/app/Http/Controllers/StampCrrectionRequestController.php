@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Attendance;
+use App\Models\AttendanceFixes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -26,36 +27,30 @@ class StampCrrectionRequestController extends Controller
         $userId = Auth::id();
         $pageParam = $request->query('page');
         if($pageParam != 'approval'){
-            $attendances = Attendance::where([
-                ['user_id', '=', $userId],
+            $attendances = AttendanceFixes::where([
                 ['approval', '=', false]
-                ])->with(['attendanceFix' => function ($query){
-                    $query->notApproved();
-                }])->get();
+                ])->whereHas('attendance', function ($query) use ($userId){
+                    $query->where('user_id',$userId);
+                })->with('attendance')->get();
         }else {
-            $attendances = Attendance::where([
-                ['user_id', '=', $userId],
+            $attendances = AttendanceFixes::where([
                 ['approval', '=', true]
-                ])->whereHas('attendanceFix', function($query){
-                    $query->approved();
-                })->get();
+                ])->whereHas('attendance', function ($query) use ($userId){
+                    $query->where('user_id',$userId);
+                })->with('attendance')->get();
         }
         return view('pages.stamp_correction_request_list', compact('attendances','pageParam'));
     }
     private function adminIndex(Request $request){
         $pageParam = $request->query('page');
         if($pageParam != 'approval'){
-            $attendances = Attendance::where([
+            $attendances = AttendanceFixes::where([
                 ['approval', '=', false]
-                ])->with(['attendanceFix' => function ($query){
-                    $query->notApproved();
-                }])->get();
+                ])->with('attendance')->get();
         }else {
-            $attendances = Attendance::where([
+            $attendances = AttendanceFixes::where([
                 ['approval', '=', true]
-                ])->whereHas('attendanceFix', function($query){
-                    $query->approved();
-                })->get();
+                ])->with('attendance')->get();
         }
         return view('pages.stamp_correction_request_list', compact('attendances','pageParam'));
     }
