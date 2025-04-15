@@ -13,14 +13,18 @@
   1. make npm-watch
   4. src/resources/scss/配下で編集
 - テストの実行
-  1. docker-compose exec mysql mysql -u root -p
-  2. CREATE DATABASE demo_test;
-  3. テスト用のenvファイルは .env.testing.example ファイルから.env.testing をコピーしてください。
+  1. docker-compose exec mysql mysql -u root -p (PWはroot)
+  2. CREATE DATABASE test_database;
+  3. exit (mysqlコンテナを出る)
   4. docker-compose exec php bash
   5. php artisan key:generate --env=testing
   6. php artisan config:clear
   7. php artisan migrate --env=testing
-  8. php artisan test --testsuite=Feature (全テストの実行)
+  8. php artisan test --testsuite=Feature (テストの実行)
+- duskテスト(jsテスト用ブラウザテスト)
+  1. make dusk-init (phpコンテナから抜けた状態で)
+  2. docker-compose exec php bash
+  3. php artisan dusk
 
 ## 使用技術(実行環境)
 
