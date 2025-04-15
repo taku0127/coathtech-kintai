@@ -1,0 +1,16 @@
+.p-attendanceDetail{
+    &_content{
+        margin-top: 51px;
+    }
+    &_btn{
+        margin-top: 120px;
+        text-align: right;
+    }
+    &_note{
+        font-size: 18px;
+        color: #FF000080;
+        font-weight: 800;
+        text-align: right;
+        margin-top: 22px;
+    }
+}

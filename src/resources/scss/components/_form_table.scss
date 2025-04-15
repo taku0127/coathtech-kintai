@@ -1,0 +1,52 @@
+.c-formTable{
+    border-radius: 10px;
+    width: 100%;
+    background-color: #fff;
+    &_tr{
+        &:not(:first-child){
+            border-top: 1px solid #E1E1E1;
+        }
+    }
+    &_th,&_td{
+        padding: 35px 64px;
+        font-size: 16px;
+    }
+    &_th{
+        color: #737373;
+        vertical-align: middle;
+    }
+    &_td{
+        &_content{
+            width: 316px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 700;
+            &:not(:first-child){
+                margin-top: 5px;
+            }
+            &_note{
+                padding-left: 30px;
+            }
+        }
+        &_item{
+            width: 33%;
+            text-align: center;
+            &.--wide{
+                width: auto;
+            }
+        }
+        input,textarea{
+            width: 100%;
+            border: 1px solid #E1E1E1;
+            border-radius: 4px;
+            padding: 5px 10px;
+        }
+    }
+
+    &_error{
+        color: red;
+        margin-top: 10px;
+        font-size: 16px;
+    }
+}

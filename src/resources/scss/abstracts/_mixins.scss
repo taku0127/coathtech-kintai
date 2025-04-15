@@ -1,0 +1,5 @@
+@mixin tabView {
+    @media screen and (max-width: 850px) {
+        @content;
+    }
+}

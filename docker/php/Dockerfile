@@ -10,4 +10,11 @@ RUN curl -sS https://getcomposer.org/installer | php \
   && mv composer.phar /usr/local/bin/composer \
   && composer self-update
 
+RUN apt-get update \
+ && apt-get install -yqq --no-install-recommends \
+ libnss3 \
+ libxcb1-dev
+
+RUN docker-php-ext-install zip
+
 WORKDIR /var/www

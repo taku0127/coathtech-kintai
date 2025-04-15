@@ -1,0 +1,38 @@
+.p-attendance{
+    padding: 209px 0 0;
+    text-align: center;
+    &_label{
+        border-radius: 50px;
+        padding: 9px 20px;
+        font-size: 18px;
+        color: #696969;
+        background-color: #C8C8C8;
+        font-weight: 700;
+        display: inline-block;
+    }
+    &_date{
+        font-size: 40px;
+        margin-top: 32px;
+    }
+    &_time{
+        font-weight: 700;
+        font-size: 80px;
+        margin-top: 32px;
+    }
+    &_btn{
+        &s{
+            margin-top: 87px;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            & > :nth-child(n+2){
+                margin-left: 82px;
+            }
+        }
+    }
+    &_note{
+        margin-top: 102px;
+        font-weight: 700;
+        font-size: 26px;
+    }
+}
