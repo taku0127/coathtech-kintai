@@ -22,3 +22,4 @@ stop-watch:
 dusk-init:
 	docker compose exec php php artisan dusk:install
 	docker-compose exec php bash -c "chmod -R 777 storage bootstrap/cache"
+	rm -f src/tests/Browser/ExampleTest.php
