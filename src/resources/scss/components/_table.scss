@@ -1,0 +1,23 @@
+.c-table{
+    background-color: #fff;
+    border-radius: 10px;
+    width: 100%;
+    &_th{
+        border-bottom: 3px solid #E1E1E1;
+    }
+    &_th,&_td{
+        font-size: 16px;
+        font-weight: 700;
+        text-align: center;
+        padding: 15px 0;
+        color: #737373;
+    }
+    &_tr{
+        &:nth-child(n+3){
+            border-top: 2px solid #E1E1E1;
+        }
+    }
+    &_link{
+        color: #000;
+    }
+}

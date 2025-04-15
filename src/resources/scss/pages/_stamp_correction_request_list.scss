@@ -1,0 +1,19 @@
+.p-stampCorrectionRequestList{
+    &_table{
+        margin-top: 46px;
+    }
+    &_link{
+        font-size: 16px;
+        &.--active{
+            font-weight: bold;
+        }
+        &:not(:first-child){
+            margin-left: 106px;
+        }
+        &s{
+            padding: 0 0 17px 57px;
+            border-bottom: 1px solid #000;
+            margin-top: 65px;
+        }
+    }
+}

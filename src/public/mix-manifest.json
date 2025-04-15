@@ -1,5 +1,9 @@
 {
     "/js/app.js": "/js/app.js",
     "/js/bootstrap.js": "/js/bootstrap.js",
-    "/css/index.css": "/css/index.css"
+    "/js/script.js": "/js/script.js",
+    "/css/main.css": "/css/main.css",
+    "/css/stamp_correction_request_list.css": "/css/stamp_correction_request_list.css",
+    "/css/reset.css": "/css/reset.css",
+    "/css/attendance.css": "/css/attendance.css"
 }

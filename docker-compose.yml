@@ -40,3 +40,28 @@ services:
             - mysql
         ports:
             - 8080:80
+
+    mailhog:
+        image: mailhog/mailhog
+        ports:
+          - "8025:8025"
+        environment:
+          MH_STORAGE: maildir
+          MH_MAILDIR_PATH: /tmp
+        volumes:
+          - maildir:/tmp
+
+    selenium:
+        image: selenium/standalone-chrome:3.141.59-oxygen
+        container_name: selenium
+        ports:
+        - 4444:4444
+        restart: always
+        depends_on:
+        - nginx
+        privileged: true
+        environment:
+        - TZ=Asia/Tokyo
+
+volumes:
+    maildir:
