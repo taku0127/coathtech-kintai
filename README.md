@@ -7,6 +7,7 @@
   2. cd coathtech-kintai/
   3. make init
      ※MySQL は、OS によって起動しない場合があるのでそれぞれの PC に合わせて docker-compose.yml ファイルを編集してください。
+     ※make initでエラーが出る場合2.3回実行してみてください。
 - Laravel 環境構築
   1. 上記のmake initで設定済み
 - sass の仕様
