@@ -9,10 +9,14 @@ use Illuminate\Database\Eloquent\Model;
 class BreakTimeFixes extends Model
 {
     use HasFactory;
-    protected $fillable = ['break_time_id', 'start', 'end','approval'];
+    protected $fillable = ['break_time_id', 'attendance_fix_id', 'start', 'end','approval'];
 
     public function breakTime(){
         return $this->belongsTo(BreakTime::class);
+    }
+
+    public function attendanceFix(){
+        return $this->belongsTo(AttendanceFixes::class, 'attendance_fix_id');
     }
 
     public function scopeNotApproved($query)

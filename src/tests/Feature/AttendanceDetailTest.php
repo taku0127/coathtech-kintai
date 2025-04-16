@@ -245,7 +245,8 @@ class AttendanceDetailTest extends AbstractTestCase
         $admin = Admin::find(1);
         $this->actingAs($admin,'admin');
         // 承認画面確認
-        $response = $this->followingRedirects()->get($this->ADMIN_STAMP_CORRECTION_REQUEST_APPROVE."/".$attendance->id);
+        $attendanceFix = $attendance->attendanceFix->where('approval' , false);
+        $response = $this->followingRedirects()->get($this->ADMIN_STAMP_CORRECTION_REQUEST_APPROVE."/".$attendanceFix[0]->id);
         $response->assertStatus(200);
         $response->assertSee($user->name);
         $response->assertSee($postData['note']);
@@ -329,7 +330,9 @@ class AttendanceDetailTest extends AbstractTestCase
         $admin = Admin::find(1);
         $this->actingAs($admin,'admin');
         // 承認処理
-        $response = $this->followingRedirects()->post($this->ADMIN_STAMP_CORRECTION_REQUEST_APPROVE."/".$attendance->id);
+
+        $attendanceFix = $attendance->attendanceFix->where('approval' , false);
+        $response = $this->followingRedirects()->post($this->ADMIN_STAMP_CORRECTION_REQUEST_APPROVE."/".$attendanceFix[0]->id);
 
         //管理者ログアウト
         $this->post('/logout');
@@ -611,7 +614,9 @@ class AttendanceDetailTest extends AbstractTestCase
         $admin = Admin::find(1);
         $this->actingAs($admin,'admin');
         // 承認処理
-        $response = $this->followingRedirects()->post($this->ADMIN_STAMP_CORRECTION_REQUEST_APPROVE."/".$attendance->id);
+
+        $attendanceFix = $attendance->attendanceFix->where('approval' , false);
+        $response = $this->followingRedirects()->post($this->ADMIN_STAMP_CORRECTION_REQUEST_APPROVE."/".$attendanceFix[0]->id);
 
         // 申請一覧画面確認
         $response = $this->get($this->ADMIN_STAMP_CORRECTION_REQUEST."?page=approval");
@@ -656,7 +661,8 @@ class AttendanceDetailTest extends AbstractTestCase
         $this->actingAs($admin,'admin');
 
         // 申請画面確認
-        $response = $this->get($this->ADMIN_STAMP_CORRECTION_REQUEST_APPROVE."/".$attendance->id);
+        $attendanceFix = $attendance->attendanceFix->where('approval' , false);
+        $response = $this->get($this->ADMIN_STAMP_CORRECTION_REQUEST_APPROVE."/".$attendanceFix[0]->id);
         $response->assertStatus(200);
         foreach ($postData as $key => $value) {
             if($key == 'break_time'){
@@ -708,7 +714,8 @@ class AttendanceDetailTest extends AbstractTestCase
         $this->actingAs($admin,'admin');
 
         // 承認処理
-        $this->post($this->ADMIN_STAMP_CORRECTION_REQUEST_APPROVE."/".$attendance->id);
+        $attendanceFix = $attendance->attendanceFix->where('approval' , false);
+        $this->post($this->ADMIN_STAMP_CORRECTION_REQUEST_APPROVE."/".$attendanceFix[0]->id);
 
         // 申請画面確認
         $response = $this->get($this->ATTENDANCE_PATH."/".$attendance->id);
