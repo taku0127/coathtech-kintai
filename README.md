@@ -37,7 +37,8 @@
 
 
 ## ER 図
-![ir drawio](https://github.com/user-attachments/assets/b7bd2db0-aa03-4781-a503-1268a8fc2c86)
+![ir drawio](https://github.com/user-attachments/assets/76b87e13-d584-4a31-af4a-f0524515a987)
+
 
 
 ## URL
