@@ -15,6 +15,10 @@ class AttendanceFixes extends Model
         return $this->belongsTo(Attendance::class);
     }
 
+    public function breakTimeFixes(){
+        return $this->hasMany(BreakTimeFixes::class,'attendance_fix_id');
+    }
+
     public function scopeNotApproved($query)
     {
         return $query->where('approval', false);
