@@ -38,7 +38,7 @@ class AttendanceDetailController extends Controller
         $attendance->update([
             'approval' => false,
         ]);
-        AttendanceFixes::create([
+        $attendanceFix = AttendanceFixes::create([
             'attendance_id' => $id,
             'clock_in' => $request->clock_in,
             'clock_out' => $request->clock_out,
@@ -48,6 +48,7 @@ class AttendanceDetailController extends Controller
         foreach ($breakTimesId as $breakTimeId) {
             BreakTimeFixes::create([
                 'break_time_id' => $breakTimeId,
+                'attendance_fix_id' => $attendanceFix->id,
                'start' => $request->break_time['start'][$breakTimeId],
                'end' => $request->break_time['end'][$breakTimeId],
             ]);

@@ -56,22 +56,13 @@ class StampCrrectionRequestController extends Controller
     }
 
     public function adminApprove($id){
-        $attendance = Attendance::with(['attendanceFix' => function ($query){
-            $query->notApproved()->first();
-        }])->with(['breakTimes.breakTimeFix' => function($query){
-            $query->notApproved();
-        }])->find($id);
-        return view('pages.attendance_detail',compact('attendance'));
+        $attendance = AttendanceFixes::with('attendance.user','attendance.breakTimes.breakTimeFix')->find($id);
+        return view('pages.stamp_correction_request_detail',compact('attendance'));
     }
 
     public function adminApproveStore($id){
-        $attendance = Attendance::with(['attendanceFix' => function ($query){
-            $query->notApproved()->first();
-        }])->with(['breakTimes.breakTimeFix' => function($query){
-            $query->notApproved();
-        }])->find($id);
-        $attendanceFix = $attendance->attendanceFix->first();
-        $attendance->update([
+        $attendanceFix = AttendanceFixes::with('attendance.breakTimes','breakTimeFixes')->find($id);
+        $attendanceFix->attendance->update([
             'approval' => true,
             'clock_in' => $attendanceFix->clock_in,
             'clock_out' => $attendanceFix->clock_out,
@@ -80,17 +71,16 @@ class StampCrrectionRequestController extends Controller
         $attendanceFix->update([
             'approval' => true,
         ]);
-        foreach ($attendance->breakTimes as $breakTime) {
-            $breakTimeFix = $breakTime->breakTimeFix->first();
+        foreach ($attendanceFix->breakTimeFixes as $breakTimeFix) {
             $breakTimeFix->update([
                 'approval' => true,
             ]);
-            $breakTime->update([
+            $breakTimeFix->breakTime->update([
                 'start' => $breakTimeFix->start,
                 'end' => $breakTimeFix->end,
             ]);
         }
 
-        return redirect(route('admin.approve',['id' => $attendance->id]));
+        return redirect(route('admin.approve',['id' => $attendanceFix->id]));
     }
 }

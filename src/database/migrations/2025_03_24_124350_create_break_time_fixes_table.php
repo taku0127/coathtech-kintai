@@ -16,6 +16,7 @@ class CreateBreakTimeFixesTable extends Migration
         Schema::create('break_time_fixes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('break_time_id')->constrained();
+            $table->foreignId('attendance_fix_id')->constrained();
             $table->time('start');
             $table->time('end');
             $table->boolean('approval')->default(false);
